@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://b8qu42svaivr1"]
+
+[ext_resource type="Script" uid="uid://ctq8034oi4wau" path="res://raycast.gd" id="1_r2c84"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ti1y2"]
+top_radius = 0.005
+bottom_radius = 0.005
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_avl12"]
+shading_mode = 0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cr7io"]
+top_radius = 0.005
+bottom_radius = 0.005
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nfdh3"]
+shading_mode = 0
+
+[node name="Node3D" type="XROrigin3D"]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="."]
+
+[node name="LeftController" type="XRController3D" parent="."]
+tracker = &"left_hand"
+pose = &"grip"
+
+[node name="LeftControllerRayCast" type="RayCast3D" parent="LeftController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.059, -0.052)
+target_position = Vector3(0, -10, 0)
+script = ExtResource("1_r2c84")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftController/LeftControllerRayCast"]
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_ti1y2")
+surface_material_override/0 = SubResource("StandardMaterial3D_avl12")
+
+[node name="RightController" type="XRController3D" parent="."]
+tracker = &"right_hand"
+pose = &"grip"
+
+[node name="RightControllerRayCast" type="RayCast3D" parent="RightController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.059, -0.052)
+target_position = Vector3(0, -10, 0)
+script = ExtResource("1_r2c84")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RightController/RightControllerRayCast"]
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_cr7io")
+surface_material_override/0 = SubResource("StandardMaterial3D_nfdh3")
