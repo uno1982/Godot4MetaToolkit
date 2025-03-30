@@ -27,7 +27,7 @@ mesh = SubResource("BoxMesh_3m01o")
 transform = Transform3D(1.92639, 0, 0, 0, 1, 0, 0, 0, 1, -0.0712786, -0.259162, -3.19761)
 mesh = SubResource("BoxMesh_3m01o")
 
-[node name="Node3D" parent="." instance=ExtResource("2_34yur")]
+[node name="VRPlayer" parent="." instance=ExtResource("2_34yur")]
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.59649, 0, -5.80542)
