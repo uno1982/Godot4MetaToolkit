@@ -1,6 +1,7 @@
 extends Node3D
 var xr_interface: XRInterface
 
+#this is the main init script for a VR Scene
 func _ready():
 	xr_interface = XRServer.find_interface("OpenXR")
 	
