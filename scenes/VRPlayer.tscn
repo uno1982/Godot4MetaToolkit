@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://b8qu42svaivr1"]
+[gd_scene load_steps=7 format=3 uid="uid://b8qu42svaivr1"]
 
 [ext_resource type="Script" uid="uid://ctq8034oi4wau" path="res://raycast.gd" id="1_r2c84"]
+[ext_resource type="Script" uid="uid://gvf05fwc3p2p" path="res://scripts/VRLocomotion.gd" id="2_uvuj7"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_ti1y2"]
 top_radius = 0.005
@@ -47,3 +48,7 @@ script = ExtResource("1_r2c84")
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_cr7io")
 surface_material_override/0 = SubResource("StandardMaterial3D_nfdh3")
+
+[node name="VRLocomotion" type="Node" parent="."]
+script = ExtResource("2_uvuj7")
+metadata/_custom_type_script = "uid://gvf05fwc3p2p"
