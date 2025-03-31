@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://br0wtdhe5wtx"]
+[gd_scene load_steps=11 format=3 uid="uid://br0wtdhe5wtx"]
 
 [ext_resource type="Script" uid="uid://h5ktq382xcfd" path="res://scripts/main_vr_init.gd" id="1_x2jji"]
 [ext_resource type="PackedScene" uid="uid://b8qu42svaivr1" path="res://scenes/VRPlayer.tscn" id="2_34yur"]
@@ -7,7 +7,22 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_3m01o"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_x2jji"]
+size = Vector3(82.3757, 1, 58.3628)
+
 [sub_resource type="CylinderMesh" id="CylinderMesh_x2jji"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_x2jji"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3dvue"]
+size = Vector3(1.92773, 1, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_x2jji"]
+left_to_right = 1.0
+size = Vector3(2.39, 0.51, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_34yur"]
+size = Vector3(2.48102, 0.518555, 1)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_x2jji")
@@ -19,22 +34,48 @@ environment = SubResource("Environment_av163")
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 2.08074, 0)
 shadow_enabled = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(82.291, 0, 0, 0, 1, 0, 0, 0, 58.275, -0.0712786, -1.25303, 0.0671024)
-mesh = SubResource("BoxMesh_3m01o")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.92639, 0, 0, 0, 1, 0, 0, 0, 1, -0.0712786, -0.259162, -3.19761)
-mesh = SubResource("BoxMesh_3m01o")
-
 [node name="VRPlayer" parent="." instance=ExtResource("2_34yur")]
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.59649, 0, -5.80542)
-mesh = SubResource("CylinderMesh_x2jji")
-skeleton = NodePath("../MeshInstance3D2")
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2, 0)
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="MeshInstance3D3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.1983, 0, -1.84225)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(82.291, 0, 0, 0, 1, 0, 0, 0, 58.275, 0, 0, 0)
+mesh = SubResource("BoxMesh_3m01o")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00730515, 0, -0.00157547)
+shape = SubResource("BoxShape3D_x2jji")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.59649, 0, -5.80542)
+
+[node name="Cylinder1" type="MeshInstance3D" parent="StaticBody3D3"]
 mesh = SubResource("CylinderMesh_x2jji")
-skeleton = NodePath("../MeshInstance3D2")
+skeleton = NodePath("../../StaticBody3D4/MeshInstance3D2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3"]
+shape = SubResource("CylinderShape3D_x2jji")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.232402, -3.2805)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticBody3D4"]
+transform = Transform3D(1.92639, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_3m01o")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00195313, 0, 0)
+shape = SubResource("BoxShape3D_3dvue")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(-0.907334, 0, 3.26113, 0, 3.385, 0, -3.26113, 0, -0.907334, -5.20668, 0.108809, -6.07766)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2"]
+mesh = SubResource("PrismMesh_x2jji")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(0.976785, -0.214131, -0.00618812, 0.214198, 0.976693, 0.0138127, 0.00308621, -0.0148176, 0.999886, 0.0132384, -0.259861, -7.7486e-05)
+shape = SubResource("BoxShape3D_34yur")

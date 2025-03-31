@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://b8qu42svaivr1"]
+[gd_scene load_steps=13 format=3 uid="uid://b8qu42svaivr1"]
 
 [ext_resource type="Script" uid="uid://ctq8034oi4wau" path="res://raycast.gd" id="1_r2c84"]
+[ext_resource type="Script" uid="uid://0obl2pnek78a" path="res://scripts/VRHandCollider.gd" id="2_ke4ib"]
 [ext_resource type="Script" uid="uid://gvf05fwc3p2p" path="res://scripts/VRLocomotion.gd" id="2_uvuj7"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_ti1y2"]
@@ -10,12 +11,31 @@ bottom_radius = 0.005
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_avl12"]
 shading_mode = 0
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_2p3jf"]
+radius = 0.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ke4ib"]
+transparency = 1
+albedo_color = Color(0.148614, 0.726923, 0.952147, 0.4)
+
+[sub_resource type="SphereMesh" id="SphereMesh_2p3jf"]
+radius = 0.05
+height = 0.1
+
 [sub_resource type="CylinderMesh" id="CylinderMesh_cr7io"]
 top_radius = 0.005
 bottom_radius = 0.005
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nfdh3"]
 shading_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_crssw"]
+transparency = 1
+albedo_color = Color(0.734906, 0.0676843, 0.198859, 0.4)
+
+[sub_resource type="SphereMesh" id="SphereMesh_stk1l"]
+radius = 0.05
+height = 0.1
 
 [node name="Node3D" type="XROrigin3D"]
 
@@ -30,10 +50,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.059, -0.052)
 target_position = Vector3(0, -10, 0)
 script = ExtResource("1_r2c84")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftController/LeftControllerRayCast"]
+[node name="Pointer" type="MeshInstance3D" parent="LeftController/LeftControllerRayCast"]
+visible = false
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_ti1y2")
 surface_material_override/0 = SubResource("StandardMaterial3D_avl12")
+
+[node name="VRHandCollider" type="Area3D" parent="LeftController"]
+script = ExtResource("2_ke4ib")
+debug_sphere_color = Color(0.148614, 0.726923, 0.952147, 0.4)
+metadata/_custom_type_script = "uid://0obl2pnek78a"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftController/VRHandCollider"]
+shape = SubResource("SphereShape3D_2p3jf")
+
+[node name="DebugMesh" type="MeshInstance3D" parent="LeftController/VRHandCollider"]
+material_override = SubResource("StandardMaterial3D_ke4ib")
+mesh = SubResource("SphereMesh_2p3jf")
 
 [node name="RightController" type="XRController3D" parent="."]
 tracker = &"right_hand"
@@ -44,11 +77,29 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.059, -0.052)
 target_position = Vector3(0, -10, 0)
 script = ExtResource("1_r2c84")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RightController/RightControllerRayCast"]
+[node name="Pointer" type="MeshInstance3D" parent="RightController/RightControllerRayCast"]
+visible = false
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_cr7io")
 surface_material_override/0 = SubResource("StandardMaterial3D_nfdh3")
 
+[node name="VRHandCollider" type="Area3D" parent="RightController"]
+script = ExtResource("2_ke4ib")
+debug_sphere_color = Color(0.734906, 0.0676843, 0.198859, 0.4)
+metadata/_custom_type_script = "uid://0obl2pnek78a"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightController/VRHandCollider"]
+shape = SubResource("SphereShape3D_2p3jf")
+
+[node name="DebugMesh" type="MeshInstance3D" parent="RightController/VRHandCollider"]
+material_override = SubResource("StandardMaterial3D_crssw")
+mesh = SubResource("SphereMesh_stk1l")
+
 [node name="VRLocomotion" type="Node" parent="."]
 script = ExtResource("2_uvuj7")
+speed = 3.0
+sprint_multiplier = 1.5
+toggle_sprint_mode = false
+hmd_height = 1.5
+capsule_color = Color(0.501242, 0.634331, 0.935977, 0.8)
 metadata/_custom_type_script = "uid://gvf05fwc3p2p"
