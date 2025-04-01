@@ -10,5 +10,14 @@ func _ready():
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 		
 		get_viewport().use_xr = true
+		# Get the OpenXR extensions object first
+		var openxr_ext = xr_interface.get_openxr_extensions()
+		if openxr_ext:
+			# Set GPU level (0-4 for Quest 2, 0-5 for Quest 3)
+			openxr_ext.set_cpu_performance_level(4)  # Medium-high CPU
+			openxr_ext.set_gpu_performance_level(4)  # High GPU (max for Quest 2)
+			print("Set Quest performance levels: CPU=4, GPU=4")
+		else:
+			print("OpenXR extensions not available")
 	else:
 		print("HMD Not Connected! Check Meta link or Steamvr connection")
