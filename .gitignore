@@ -2,3 +2,4 @@
 .godot/
 android/
 local.gd
+export_presets.cfg
