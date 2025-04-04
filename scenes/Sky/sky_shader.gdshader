@@ -1,5 +1,5 @@
 shader_type sky;
-render_mode use_quarter_res_pass;
+render_mode use_half_res_pass;
 
 // Sky parameters
 uniform vec3 day_top_color : source_color = vec3(0.3, 0.5, 0.95);
@@ -8,7 +8,6 @@ uniform vec3 sunset_top_color : source_color = vec3(0.26, 0.24, 0.38);
 uniform vec3 sunset_bottom_color : source_color = vec3(0.95, 0.33, 0.15);
 uniform vec3 night_top_color : source_color = vec3(0.02, 0.02, 0.05);
 uniform vec3 night_bottom_color : source_color = vec3(0.05, 0.05, 0.1);
-
 
 // Cloud parameters
 uniform float cloud_edge_softness : hint_range(0.0, 1.0) = 0.3;
@@ -31,69 +30,127 @@ uniform float moon_halo : hint_range(0.0, 1.0) = 0.1;
 // Time of day control
 uniform float time_of_day : hint_range(0.0, 1.0) = 0.5; // 0.0 = midnight, 0.25 = sunrise, 0.5 = noon, 0.75 = sunset
 
-// Advanced spherical UV mapping with less distortion
-vec2 improved_spherical_uv(vec3 dir) {
-    // Use atan2 for a more precise mapping
-    float phi = atan(dir.z, dir.x);
-    float theta = acos(clamp(dir.y, -1.0, 1.0));
+// 3D Noise-based cloud generation
+// This approach eliminates UV seams by working directly in 3D space
+float voronoi_noise(vec3 p) {
+    vec3 ip = floor(p);
+    vec3 fp = fract(p);
     
-    // Apply a non-linear transformation to reduce pole pinching
-    float pole_correction = 1.0 - pow(abs(dir.y), 0.5);
+    float minDist = 1.0;
     
-    // Remap to [0,1] range with wrapping and pole correction
-    vec2 uv = vec2(
-        (phi / (2.0 * 3.14159265) + 0.5),
-        theta / 3.14159265 * pole_correction
-    );
+    for (int i = -1; i <= 1; i++) {
+        for (int j = -1; j <= 1; j++) {
+            for (int k = -1; k <= 1; k++) {
+                vec3 offset = vec3(float(i), float(j), float(k));
+                // Generate a random position from the cell coordinate
+                vec3 pos = offset + vec3(
+                    fract(sin(dot(ip + offset, vec3(12.9898, 78.233, 45.164))) * 43758.5453),
+                    fract(sin(dot(ip + offset, vec3(39.346, 11.135, 83.155))) * 43758.5453),
+                    fract(sin(dot(ip + offset, vec3(73.156, 52.235, 09.151))) * 43758.5453)
+                );
+                
+                float dist = length(pos - fp);
+                minDist = min(minDist, dist);
+            }
+        }
+    }
     
-    return uv;
+    return minDist;
 }
 
-// Seamless noise function using multiple octaves
-float fbm_noise(vec2 uv, float time) {
-    // Multiple layers of noise with different scales and offsets
-    float noise1 = texture(cloud_noise_texture, uv * 1.0 + vec2(time * 0.01, 0.0)).r;
-    float noise2 = texture(cloud_noise_texture, uv * 2.0 + vec2(-time * 0.015, time * 0.01)).r;
-    float noise3 = texture(cloud_noise_texture, uv * 4.0 + vec2(time * 0.02, -time * 0.02)).r;
-    
-    // Combine noise layers with decreasing amplitude
-    return (noise1 * 0.5 + noise2 * 0.3 + noise3 * 0.2);
+// Simple hash function for noise
+float hash_noise(vec3 p) {
+    p = fract(p * vec3(0.1031, 0.1030, 0.0973));
+    p += dot(p, p.yxz + 33.33);
+    return fract((p.x + p.y) * p.z);
 }
 
-// Advanced cloud generation that avoids poles
-float advanced_clouds(vec3 ray_dir, float time) {
-    // Get improved UV mapping
-    vec2 base_uv = improved_spherical_uv(ray_dir);
+// Generate simple 3D value noise
+float value_noise_3d(vec3 p) {
+    vec3 i = floor(p);
+    vec3 f = fract(p);
     
-    // Apply cloud movement with wraparound
-    float time_scale = time * cloud_speed * 0.05;
-    vec2 moved_uv = fract(base_uv + 
-        vec2(
-            cloud_movement_direction.x * time_scale, 
-            cloud_movement_direction.y * time_scale
-        )
-    );
+    // Smoothstep interpolation
+    vec3 u = f * f * (3.0 - 2.0 * f);
     
-    // Pole avoidance - reduce cloud density near the poles
-    float pole_mask = 1.0 - smoothstep(0.8, 1.0, abs(ray_dir.y));
+    // Sample 8 corners of the cube
+    float a = hash_noise(i);
+    float b = hash_noise(i + vec3(1.0, 0.0, 0.0));
+    float c = hash_noise(i + vec3(0.0, 1.0, 0.0));
+    float d = hash_noise(i + vec3(1.0, 1.0, 0.0));
+    float e = hash_noise(i + vec3(0.0, 0.0, 1.0));
+    float f1 = hash_noise(i + vec3(1.0, 0.0, 1.0));
+    float g = hash_noise(i + vec3(0.0, 1.0, 1.0));
+    float h = hash_noise(i + vec3(1.0, 1.0, 1.0));
     
-    // Generate noise with multiple octaves
-    float base_cloud = fbm_noise(moved_uv, time);
+    // Trilinear interpolation
+    float k0 = a;
+    float k1 = b - a;
+    float k2 = c - a;
+    float k3 = e - a;
+    float k4 = a - b - c + d;
+    float k5 = a - c - e + g;
+    float k6 = a - b - e + f1;
+    float k7 = -a + b + c - d + e - f1 - g + h;
     
-    // Altitude-based cloud density adjustment
-    float altitude_factor = 1.0 - smoothstep(-0.2, 0.2, ray_dir.y);
-    base_cloud = mix(base_cloud, base_cloud * 1.2, altitude_factor);
+    return k0 + k1 * u.x + k2 * u.y + k3 * u.z + 
+           k4 * u.x * u.y + k5 * u.y * u.z + k6 * u.x * u.z + 
+           k7 * u.x * u.y * u.z;
+}
+
+// Ultra-simple cloud noise with continuous, non-symmetric coverage
+float basic_cloud_noise(vec3 dir, float time) {
+    // Use a fixed reference plane rather than ray direction
+    // This creates a consistent layer of clouds across the entire sky
+    vec3 base_plane = normalize(vec3(0.0, 1.0, 0.0)); // Up vector
     
-    // Apply pole mask to dramatically reduce cloud density
-    base_cloud *= pole_mask;
+    // Project the view direction onto a plane for consistent sampling
+    float height = dir.y;
+    vec3 flat_dir = normalize(dir - base_plane * height);
     
-    // Apply cloud coverage and edge softness
-    float threshold = 1.0 - cloud_coverage;
-    float cloud_factor = smoothstep(
-        threshold - cloud_edge_softness, 
-        threshold + cloud_edge_softness, 
-        base_cloud
-    );
+    // Calculate a position on a virtual cloud layer
+    // This avoids spherical mapping issues while maintaining continuity
+    vec3 cloud_pos = flat_dir * (1.0 - abs(height) * 0.5) + vec3(0.0, height * 0.2, 0.0);
+    
+    // Scale for appropriate cloud size
+    cloud_pos *= 0.25;
+    
+    // Create a time-dependent offset for movement
+    vec2 movement = cloud_movement_direction * time * cloud_speed * 0.1;
+    
+    // Apply movement to x-z plane (keeping height consistent)
+    cloud_pos.x += movement.x;
+    cloud_pos.z += movement.y;
+    
+    // Basic noise sampling at different frequencies
+    float n1 = value_noise_3d(cloud_pos);
+    float n2 = value_noise_3d(cloud_pos * 2.0 + vec3(100.0, 50.0, 200.0));
+    float n3 = value_noise_3d(cloud_pos * 4.0 + vec3(200.0, 100.0, 300.0));
+    
+    // Mix the noise samples with varied weights
+    float noise = n1 * 0.5 + n2 * 0.35 + n3 * 0.15;
+    
+    // Apply vertical falloff to create layered feeling
+    float vertical_falloff = 1.0 - pow(abs(height), 1.5);
+    
+    return noise * vertical_falloff;
+}
+
+// Get cloud density with more natural distribution
+float get_cloud_density(vec3 ray_dir, float time) {
+    // Get base noise
+    float noise = basic_cloud_noise(ray_dir, time);
+    
+    // Shape the clouds with variable thickness
+    float base_thickness = cloud_coverage * 0.7 + 0.3; // Ensure some minimum coverage
+    float cloud_shape = smoothstep(0.4 - base_thickness * 0.4, 0.6, noise);
+    
+    // Add edge softness
+    float edge_softness_factor = cloud_edge_softness * 0.5;
+    float soft_edges = smoothstep(0.0, edge_softness_factor, cloud_shape) * 
+                       (1.0 - smoothstep(1.0 - edge_softness_factor, 1.0, cloud_shape));
+    
+    float cloud_factor = cloud_shape * (0.8 + soft_edges * 0.2);
     
     return cloud_factor;
 }
@@ -232,9 +289,9 @@ void sky() {
     sky_color += primary_factor * primary_color;
     sky_color += primary_halo * primary_halo_color;
     
-    // Add clouds
+    // Add clouds using 3D noise approach
     float time = TIME * 0.05;
-    float cloud_density = advanced_clouds(dir, time);
+    float cloud_density = get_cloud_density(dir, time);
     
     // Cloud coloring based on time of day
     vec3 cloud_color_day = vec3(1.0);

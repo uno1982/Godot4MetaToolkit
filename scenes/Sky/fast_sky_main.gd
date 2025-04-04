@@ -155,7 +155,7 @@ func update_sun_position():
 				sky_material.set_shader_parameter("LIGHT0_DIRECTION", -directional_light.global_transform.basis.z)
 	
 	# Adjust light color and energy based on time of day
-	var light_energy = max(0.05, abs(sun_height) * 2)  # Minimum light at night
+	var light_energy = max(0.05, abs(sun_height) * .8)  # Minimum light at night
 	directional_light.light_energy = light_energy
 	directional_light.shadow_enabled = true
 	# Change light color based on time of day

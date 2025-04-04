@@ -22,10 +22,11 @@ common/physics_ticks_per_second=72
 
 [rendering]
 
-renderer/rendering_method="mobile"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
-lights_and_shadows/directional_shadow/soft_shadow_filter_quality.mobile=1
-lights_and_shadows/positional_shadow/soft_shadow_filter_quality.mobile=1
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality.mobile=2
+lights_and_shadows/positional_shadow/soft_shadow_filter_quality.mobile=2
 anti_aliasing/quality/msaa_3d=1
 
 [xr]
