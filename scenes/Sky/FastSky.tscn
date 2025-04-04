@@ -5,7 +5,7 @@
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_qdhlh"]
 noise_type = 3
-seed = -2073081188
+seed = 1291469584
 frequency = 0.005
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_i0ry3"]
@@ -22,17 +22,25 @@ shader_parameter/sunset_top_color = Color(0.26, 0.24, 0.38, 1)
 shader_parameter/sunset_bottom_color = Color(0.95, 0.33, 0.15, 1)
 shader_parameter/night_top_color = Color(0.02, 0.02, 0.05, 1)
 shader_parameter/night_bottom_color = Color(0.05, 0.05, 0.1, 1)
-shader_parameter/cloud_edge_softness = 1.0
-shader_parameter/cloud_coverage = 1.0
-shader_parameter/cloud_speed = 1.0
+shader_parameter/cloud_edge_softness = 0.1
+shader_parameter/cloud_coverage = 0.5
+shader_parameter/cloud_speed = 0.01
 shader_parameter/cloud_movement_direction = Vector2(1, 0)
 shader_parameter/cloud_noise_texture = SubResource("NoiseTexture2D_i0ry3")
-shader_parameter/horizon_blend = 0.44
-shader_parameter/sun_size = 0.001
-shader_parameter/sun_halo = 0.74
-shader_parameter/moon_size = 0.001
-shader_parameter/moon_halo = 1.0
-shader_parameter/time_of_day = 0.59
+shader_parameter/horizon_blend = 0.1
+shader_parameter/sun_size = 0.01
+shader_parameter/sun_halo = 0.2
+shader_parameter/moon_size = 0.01
+shader_parameter/moon_halo = 0.2
+shader_parameter/use_moon_shadows = false
+shader_parameter/time_of_day = 0.5
+shader_parameter/use_stars = false
+shader_parameter/stars_intensity = 1.0
+shader_parameter/stars_color = Color(1, 1, 1, 1)
+shader_parameter/use_sun_texture = false
+shader_parameter/sun_texture_size = 0.05
+shader_parameter/use_moon_texture = false
+shader_parameter/moon_texture_size = 0.05
 
 [sub_resource type="Sky" id="Sky_45ee3"]
 sky_material = SubResource("ShaderMaterial_m367o")
@@ -40,6 +48,7 @@ sky_material = SubResource("ShaderMaterial_m367o")
 [sub_resource type="Environment" id="Environment_m0h8m"]
 background_mode = 2
 sky = SubResource("Sky_45ee3")
+fog_enabled = true
 fog_light_color = Color(0.5, 0.5, 0.6, 0.1)
 
 [node name="FastSky" type="Node3D"]
@@ -50,8 +59,7 @@ environment = SubResource("Environment_m0h8m")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, 0, 0, 0)
-light_color = Color(0.994348, 0.855905, 0.800086, 1)
-light_energy = 0.5
+light_energy = 0.8
 shadow_enabled = true
 shadow_opacity = 0.61
 shadow_blur = 0.0

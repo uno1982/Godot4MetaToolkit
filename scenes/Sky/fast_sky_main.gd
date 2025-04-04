@@ -110,6 +110,11 @@ func setup_sky_shader():
 	sky_material.set_shader_parameter("use_moon_shadows", use_moon_shadows)
 	sky_material.set_shader_parameter("horizon_blend", horizon_blend)
 	
+	# Set stars parameters
+	sky_material.set_shader_parameter("use_stars", use_stars)
+	sky_material.set_shader_parameter("stars_intensity", stars_intensity)
+	sky_material.set_shader_parameter("stars_color", stars_color)
+	
 	# Set color uniforms
 	sky_material.set_shader_parameter("day_top_color", Color(0.3, 0.5, 0.95))
 	sky_material.set_shader_parameter("day_bottom_color", Color(0.6, 0.8, 1.0))
@@ -119,9 +124,9 @@ func setup_sky_shader():
 	sky_material.set_shader_parameter("night_bottom_color", Color(0.05, 0.05, 0.1))
 	
 	# Fog setup
-	environment.fog_enabled = false
+	environment.fog_enabled = fog_enabled
 	environment.fog_light_color = Color(0.5, 0.5, 0.6, 0.1)  # Slightly blue-gray fog color
-	environment.fog_density = 0.01  # Adjust this for thickness
+	environment.fog_density = fog_density
 	
 	# Store reference for updates
 	world_environment.environment = environment
@@ -197,6 +202,31 @@ func update_sun_position():
 			if sky_material:
 				sky_material.set_shader_parameter("cloud_speed", value)
 
+@export_group("Stars")
+@export var use_stars: bool = false:
+	set(value):
+		use_stars = value
+		if Engine.is_editor_hint() and world_environment and world_environment.environment and world_environment.environment.sky:
+			var sky_material = world_environment.environment.sky.sky_material
+			if sky_material:
+				sky_material.set_shader_parameter("use_stars", value)
+
+@export_range(0.0, 5.0, 0.1) var stars_intensity: float = 1.0:
+	set(value):
+		stars_intensity = value
+		if Engine.is_editor_hint() and world_environment and world_environment.environment and world_environment.environment.sky:
+			var sky_material = world_environment.environment.sky.sky_material
+			if sky_material:
+				sky_material.set_shader_parameter("stars_intensity", value)
+
+@export var stars_color: Color = Color(1.0, 1.0, 1.0):
+	set(value):
+		stars_color = value
+		if Engine.is_editor_hint() and world_environment and world_environment.environment and world_environment.environment.sky:
+			var sky_material = world_environment.environment.sky.sky_material
+			if sky_material:
+				sky_material.set_shader_parameter("stars_color", value)
+
 @export_group("Sun Settings")
 @export_range(0.001, 0.5, 0.001) var sun_size: float = 0.01:
 	set(value):
@@ -228,6 +258,7 @@ func update_sun_position():
 			var sky_material = world_environment.environment.sky.sky_material
 			if sky_material:
 				sky_material.set_shader_parameter("moon_halo", value)
+
 @export var use_moon_shadows: bool = false:
 	set(value):
 		use_moon_shadows = value
@@ -264,6 +295,62 @@ func update_sun_position():
 		fog_enabled = value
 		if world_environment and world_environment.environment:
 			world_environment.environment.fog_enabled = value
+			
+@export_group("Sun Texture Override")
+@export var use_sun_texture: bool = false:
+	set(value):
+		use_sun_texture = value
+		if Engine.is_editor_hint() and world_environment and world_environment.environment and world_environment.environment.sky:
+			var sky_material = world_environment.environment.sky.sky_material
+			if sky_material:
+				sky_material.set_shader_parameter("use_sun_texture", value)
+
+
+@export var sun_texture: Texture2D:
+	set(value):
+		sun_texture = value
+		if Engine.is_editor_hint() and world_environment and world_environment.environment and world_environment.environment.sky:
+			var sky_material = world_environment.environment.sky.sky_material
+			if sky_material:
+				sky_material.set_shader_parameter("sun_texture", value)
+
+
+@export_range(0.01, 0.5, 0.01) var sun_texture_size: float = 0.05:
+	set(value):
+		sun_texture_size = value
+		if Engine.is_editor_hint() and world_environment and world_environment.environment and world_environment.environment.sky:
+			var sky_material = world_environment.environment.sky.sky_material
+			if sky_material:
+				sky_material.set_shader_parameter("sun_texture_size", value)
+
+
+@export_group("Moon Texture Override")
+@export var use_moon_texture: bool = false:
+	set(value):
+		use_moon_texture = value
+		if Engine.is_editor_hint() and world_environment and world_environment.environment and world_environment.environment.sky:
+			var sky_material = world_environment.environment.sky.sky_material
+			if sky_material:
+				sky_material.set_shader_parameter("use_moon_texture", value)
+
+
+@export var moon_texture: Texture2D:
+	set(value):
+		moon_texture = value
+		if Engine.is_editor_hint() and world_environment and world_environment.environment and world_environment.environment.sky:
+			var sky_material = world_environment.environment.sky.sky_material
+			if sky_material:
+				sky_material.set_shader_parameter("moon_texture", value)
+
+
+@export_range(0.01, 0.5, 0.01) var moon_texture_size: float = 0.05:
+	set(value):
+		moon_texture_size = value
+		if Engine.is_editor_hint() and world_environment and world_environment.environment and world_environment.environment.sky:
+			var sky_material = world_environment.environment.sky.sky_material
+			if sky_material:
+				sky_material.set_shader_parameter("moon_texture_size", value)
+
 
 # Preset functions that work in editor or runtime
 @export_group("Presets")
@@ -272,21 +359,26 @@ func update_sun_position():
 		if value:
 			dawn_preset = false
 			time_of_day = 0.25
+			use_stars = false
 
 @export var noon_preset: bool = false:
 	set(value):
 		if value:
 			noon_preset = false
 			time_of_day = 0.5
+			use_stars = false
 
 @export var sunset_preset: bool = false:
 	set(value):
 		if value:
 			sunset_preset = false
 			time_of_day = 0.75
+			use_stars = false
 
 @export var night_preset: bool = false:
 	set(value):
 		if value:
 			night_preset = false
 			time_of_day = 0.0
+			use_stars = true
+			stars_intensity = 2.0
