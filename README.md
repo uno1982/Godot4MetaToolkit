@@ -1,6 +1,13 @@
 # Godot Meta Toolkit Demo
 
-> Note: this project requires Godot 4.3 or later
+> Note: this project requires Godot 4.4 or later
+
+This project is best ran on HMDs in compatability renderer.
+
+> Rendering Features | Tools
+
+- Fast Sky Node with fully dynamic day/night cycle.
+- Physically based VR Movement with snap/smooth turn and Jump.
 
 This is a demo project demonstrating usage of the Meta Platform SDK in a Godot project. Features of the Platform SDK showcased include:
 
