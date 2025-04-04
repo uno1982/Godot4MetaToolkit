@@ -295,6 +295,62 @@ func update_sun_position():
 		fog_enabled = value
 		if world_environment and world_environment.environment:
 			world_environment.environment.fog_enabled = value
+			
+@export_group("Sun Texture Override")
+@export var use_sun_texture: bool = false:
+	set(value):
+		use_sun_texture = value
+		if Engine.is_editor_hint() and world_environment and world_environment.environment and world_environment.environment.sky:
+			var sky_material = world_environment.environment.sky.sky_material
+			if sky_material:
+				sky_material.set_shader_parameter("use_sun_texture", value)
+
+
+@export var sun_texture: Texture2D:
+	set(value):
+		sun_texture = value
+		if Engine.is_editor_hint() and world_environment and world_environment.environment and world_environment.environment.sky:
+			var sky_material = world_environment.environment.sky.sky_material
+			if sky_material:
+				sky_material.set_shader_parameter("sun_texture", value)
+
+
+@export_range(0.01, 0.5, 0.01) var sun_texture_size: float = 0.05:
+	set(value):
+		sun_texture_size = value
+		if Engine.is_editor_hint() and world_environment and world_environment.environment and world_environment.environment.sky:
+			var sky_material = world_environment.environment.sky.sky_material
+			if sky_material:
+				sky_material.set_shader_parameter("sun_texture_size", value)
+
+
+@export_group("Moon Texture Override")
+@export var use_moon_texture: bool = false:
+	set(value):
+		use_moon_texture = value
+		if Engine.is_editor_hint() and world_environment and world_environment.environment and world_environment.environment.sky:
+			var sky_material = world_environment.environment.sky.sky_material
+			if sky_material:
+				sky_material.set_shader_parameter("use_moon_texture", value)
+
+
+@export var moon_texture: Texture2D:
+	set(value):
+		moon_texture = value
+		if Engine.is_editor_hint() and world_environment and world_environment.environment and world_environment.environment.sky:
+			var sky_material = world_environment.environment.sky.sky_material
+			if sky_material:
+				sky_material.set_shader_parameter("moon_texture", value)
+
+
+@export_range(0.01, 0.5, 0.01) var moon_texture_size: float = 0.05:
+	set(value):
+		moon_texture_size = value
+		if Engine.is_editor_hint() and world_environment and world_environment.environment and world_environment.environment.sky:
+			var sky_material = world_environment.environment.sky.sky_material
+			if sky_material:
+				sky_material.set_shader_parameter("moon_texture_size", value)
+
 
 # Preset functions that work in editor or runtime
 @export_group("Presets")

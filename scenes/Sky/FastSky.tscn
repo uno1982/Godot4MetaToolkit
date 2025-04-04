@@ -5,7 +5,7 @@
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_qdhlh"]
 noise_type = 3
-seed = -604514964
+seed = 1291469584
 frequency = 0.005
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_i0ry3"]
@@ -22,21 +22,25 @@ shader_parameter/sunset_top_color = Color(0.26, 0.24, 0.38, 1)
 shader_parameter/sunset_bottom_color = Color(0.95, 0.33, 0.15, 1)
 shader_parameter/night_top_color = Color(0.02, 0.02, 0.05, 1)
 shader_parameter/night_bottom_color = Color(0.05, 0.05, 0.1, 1)
-shader_parameter/cloud_edge_softness = 0.18
-shader_parameter/cloud_coverage = 0.2
-shader_parameter/cloud_speed = 0.0
+shader_parameter/cloud_edge_softness = 0.1
+shader_parameter/cloud_coverage = 0.5
+shader_parameter/cloud_speed = 0.01
 shader_parameter/cloud_movement_direction = Vector2(1, 0)
 shader_parameter/cloud_noise_texture = SubResource("NoiseTexture2D_i0ry3")
-shader_parameter/horizon_blend = 0.41
-shader_parameter/sun_size = 0.001
-shader_parameter/sun_halo = 0.64
-shader_parameter/moon_size = 0.001
-shader_parameter/moon_halo = 0.73
-shader_parameter/use_moon_shadows = true
-shader_parameter/time_of_day = 0.0
-shader_parameter/use_stars = true
-shader_parameter/stars_intensity = 2.0
+shader_parameter/horizon_blend = 0.1
+shader_parameter/sun_size = 0.01
+shader_parameter/sun_halo = 0.2
+shader_parameter/moon_size = 0.01
+shader_parameter/moon_halo = 0.2
+shader_parameter/use_moon_shadows = false
+shader_parameter/time_of_day = 0.5
+shader_parameter/use_stars = false
+shader_parameter/stars_intensity = 1.0
 shader_parameter/stars_color = Color(1, 1, 1, 1)
+shader_parameter/use_sun_texture = false
+shader_parameter/sun_texture_size = 0.05
+shader_parameter/use_moon_texture = false
+shader_parameter/moon_texture_size = 0.05
 
 [sub_resource type="Sky" id="Sky_45ee3"]
 sky_material = SubResource("ShaderMaterial_m367o")
@@ -44,14 +48,11 @@ sky_material = SubResource("ShaderMaterial_m367o")
 [sub_resource type="Environment" id="Environment_m0h8m"]
 background_mode = 2
 sky = SubResource("Sky_45ee3")
+fog_enabled = true
 fog_light_color = Color(0.5, 0.5, 0.6, 0.1)
-fog_density = 0.074
 
 [node name="FastSky" type="Node3D"]
 script = ExtResource("1_p1ew4")
-use_stars = null
-stars_intensity = null
-stars_color = null
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_m0h8m")

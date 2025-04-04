@@ -36,6 +36,15 @@ uniform bool use_stars = false;
 uniform float stars_intensity : hint_range(0.0, 5.0, 0.1) = 1.0;
 uniform vec3 stars_color : source_color = vec3(1.0, 1.0, 1.0);
 
+//texture overrides
+uniform bool use_sun_texture = false;
+uniform sampler2D sun_texture : source_color, filter_linear_mipmap, repeat_disable;
+uniform float sun_texture_size : hint_range(0.01, 0.5) = 0.05;
+
+uniform bool use_moon_texture = false;
+uniform sampler2D moon_texture : source_color, filter_linear_mipmap, repeat_disable;
+uniform float moon_texture_size : hint_range(0.01, 0.5) = 0.05;
+
 // Hash function for stars
 vec3 hash(vec3 x) {
     x = vec3(dot(x,vec3(127.1,311.7, 74.7)),
@@ -265,32 +274,107 @@ void sky() {
     bool is_night = time_of_day < 0.25 || time_of_day > 0.75;
     
     // Light source calculation (sun/moon)
-    vec3 light_dir = normalize(LIGHT0_DIRECTION);
-    float light_dot = max(0.0, dot(dir, light_dir));
+vec3 light_dir = normalize(LIGHT0_DIRECTION);
+float light_dot = max(0.0, dot(dir, light_dir));
+
+// Sun calculation
+float sun_factor = smoothstep(1.0 - sun_size, (1.0 - sun_size) + 0.001, light_dot);
+float sun_halo_factor = pow(light_dot, 32.0) * sun_halo;
+
+// Moon calculation
+float moon_factor = smoothstep(1.0 - moon_size, (1.0 - moon_size) + 0.001, light_dot);
+float moon_halo_factor = pow(light_dot, 32.0) * moon_halo;
+
+// Color for sun and moon
+vec3 sun_color = is_night ? vec3(0.0) : vec3(1.0, 1.0, 1.0);
+vec3 moon_color = is_night ? vec3(0.8, 0.8, 0.9) : vec3(0.0);
+vec3 sun_halo_color = halo_color;
+vec3 moon_halo_color = is_night ? vec3(0.6, 0.6, 0.7) : vec3(0.0);
+
+// Determine which light source to use
+float primary_factor = is_night ? moon_factor : sun_factor;
+float primary_halo = is_night ? moon_halo_factor : sun_halo_factor;
+vec3 primary_color = is_night ? moon_color : sun_color;
+vec3 primary_halo_color = is_night ? moon_halo_color : sun_halo_color;
+
+// Always add the halo regardless of texture usage
+sky_color += primary_halo * primary_halo_color;
+
+// Check if we should use textures
+if ((use_sun_texture && !is_night) || (use_moon_texture && is_night)) {
+    // Calculate UV coordinates for texture mapping
+    vec3 up = vec3(0.0, 1.0, 0.0);
+    vec3 right = normalize(cross(up, light_dir));
+    up = normalize(cross(light_dir, right));
     
-    // Sun calculation
-    float sun_factor = smoothstep(1.0 - sun_size, (1.0 - sun_size) + 0.001, light_dot);
-    float sun_halo_factor = pow(light_dot, 32.0) * sun_halo;
+    // Calculate dot product to determine if we're looking at the front of the light source
+    float front_facing = dot(normalize(dir), light_dir);
     
-    // Moon calculation
-    float moon_factor = smoothstep(1.0 - moon_size, (1.0 - moon_size) + 0.001, light_dot);
-    float moon_halo_factor = pow(light_dot, 32.0) * moon_halo;
-    
-    // Color for sun and moon
-    vec3 sun_color = is_night ? vec3(0.0) : vec3(1.0, 1.0, 1.0);
-    vec3 moon_color = is_night ? vec3(0.8, 0.8, 0.9) : vec3(0.0);
-    vec3 sun_halo_color = halo_color;
-    vec3 moon_halo_color = is_night ? vec3(0.6, 0.6, 0.7) : vec3(0.0);
-    
-    // Determine which light source to use
-    float primary_factor = is_night ? moon_factor : sun_factor;
-    float primary_halo = is_night ? moon_halo_factor : sun_halo_factor;
-    vec3 primary_color = is_night ? moon_color : sun_color;
-    vec3 primary_halo_color = is_night ? moon_halo_color : sun_halo_color;
-    
-    // Add primary light source to sky color
+    if (front_facing > 0.0) {
+        // Project ray direction onto the plane
+        vec2 projected = vec2(
+            dot(normalize(dir), right),
+            dot(normalize(dir), up)
+        );
+        
+        // Scale based on size
+        float size_factor = is_night ? moon_texture_size : sun_texture_size;
+        projected /= size_factor;
+        
+        // Center and scale to UV space [0,1]
+        vec2 uv = projected * 0.5 + 0.5;
+        
+        // Only render if within texture bounds
+        if (uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0) {
+            // Sample texture
+            vec4 tex_color;
+            if (is_night && use_moon_texture) {
+                tex_color = texture(moon_texture, uv);
+                
+                // Calculate day/night cycle influence on moon
+                float night_intensity;
+                if (time_of_day < 0.25) {
+                    // Midnight to dawn - starts strong, gradually fades
+                    night_intensity = 1.0 - (time_of_day * 4.0);
+                } else {
+                    // Dusk to midnight - gradually increases
+                    night_intensity = (time_of_day - 0.75) * 4.0;
+                }
+                
+                // Blend moon texture with halo color based on time of day
+                // More halo color influence during twilight, more pure texture at midnight
+                float halo_influence = mix(0.4, 0.1, night_intensity); // Adjust these values for desired effect
+                vec3 tinted_moon = mix(tex_color.rgb, moon_halo_color, halo_influence);
+                
+                // Apply the blended texture
+                sky_color = mix(sky_color, tinted_moon, tex_color.a);
+            } else if (!is_night && use_sun_texture) {
+                tex_color = texture(sun_texture, uv);
+                
+                // For sun we can do a similar effect with day cycle
+                float day_intensity;
+                if (time_of_day < 0.5) {
+                    // Dawn to noon - gradually increases
+                    day_intensity = (time_of_day - 0.25) * 4.0;
+                } else {
+                    // Noon to dusk - gradually decreases
+                    day_intensity = 1.0 - ((time_of_day - 0.5) * 4.0);
+                }
+                
+                // Blend sun texture with halo color based on time of day
+                float halo_influence = mix(0.3, 0.1, day_intensity);  // More halo at sunrise/sunset
+                vec3 tinted_sun = mix(tex_color.rgb, sun_halo_color, halo_influence);
+                
+                // Apply the blended texture
+                sky_color = mix(sky_color, tinted_sun, tex_color.a);
+            }
+        }
+    }
+} else {
+    // Add primary light source to sky color (only if not using texture)
     sky_color += primary_factor * primary_color;
-    sky_color += primary_halo * primary_halo_color;
+}
+
     
     // Add stars (only during night time)
     if (use_stars && is_night) {

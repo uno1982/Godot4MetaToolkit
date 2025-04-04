@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://br0wtdhe5wtx"]
+[gd_scene load_steps=13 format=3 uid="uid://br0wtdhe5wtx"]
 
 [ext_resource type="Script" uid="uid://h5ktq382xcfd" path="res://scripts/main_vr_init.gd" id="1_x2jji"]
 [ext_resource type="PackedScene" uid="uid://b8qu42svaivr1" path="res://scenes/VRPlayer.tscn" id="2_34yur"]
 [ext_resource type="PackedScene" uid="uid://fblcle4cgh20" path="res://scenes/Sky/FastSky.tscn" id="3_34yur"]
+[ext_resource type="Texture2D" uid="uid://btno3xkhx82ol" path="res://scenes/Sky/textures/Moon.png" id="4_3dvue"]
+[ext_resource type="Texture2D" uid="uid://c2qiwgoh17uae" path="res://scenes/Sky/textures/Sun.png" id="4_qyvno"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_3m01o"]
 
@@ -73,19 +75,24 @@ transform = Transform3D(0.976785, -0.214131, -0.00618812, 0.214198, 0.976693, 0.
 shape = SubResource("BoxShape3D_34yur")
 
 [node name="FastSky" parent="." instance=ExtResource("3_34yur")]
-time_of_day = 0.6
-cloud_coverage = 0.39
-cloud_edge_softness = 0.82
-cloud_speed = 0.64
+time_of_day = 0.03
+cloud_coverage = 0.75
+cloud_edge_softness = 1.0
+cloud_speed = 0.906
 use_stars = true
-stars_intensity = 1.2
-stars_color = Color(1, 1, 1, 1)
+stars_intensity = 2.0
 sun_size = 0.001
-sun_halo = 0.64
+sun_halo = 0.62
 moon_size = 0.001
-moon_halo = 0.42
+moon_halo = 0.07
 use_moon_shadows = true
-horizon_blend = 0.6
+horizon_blend = 1.0
 fog_density = 0.074
 fog_color = Color(0.153708, 0.153354, 0.200375, 0.101961)
 fog_enabled = false
+use_sun_texture = true
+sun_texture = ExtResource("4_qyvno")
+sun_texture_size = 0.09
+use_moon_texture = true
+moon_texture = ExtResource("4_3dvue")
+moon_texture_size = 0.08
