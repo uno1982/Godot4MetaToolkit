@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://fblcle4cgh20"]
+
+[ext_resource type="Script" uid="uid://bg8rtjqrgn1u5" path="res://scenes/Sky/fast_sky_main.gd" id="1_p1ew4"]
+
+[node name="FastSky" type="Node3D"]
+script = ExtResource("1_p1ew4")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+shadow_enabled = true
+shadow_opacity = 0.61
+directional_shadow_max_distance = 36.0
