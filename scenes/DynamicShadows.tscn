@@ -73,16 +73,16 @@ transform = Transform3D(0.976785, -0.214131, -0.00618812, 0.214198, 0.976693, 0.
 shape = SubResource("BoxShape3D_34yur")
 
 [node name="FastSky" parent="." instance=ExtResource("3_34yur")]
-time_of_day = 0.59
+time_of_day = 0.58
 cloud_coverage = 1.0
 cloud_edge_softness = 1.0
-cloud_speed = 1.0
+cloud_speed = 0.698
 sun_size = 0.001
-sun_halo = 0.74
+sun_halo = 0.64
 moon_size = 0.001
-moon_halo = 1.0
+moon_halo = 0.73
 use_moon_shadows = true
-horizon_blend = 0.44
+horizon_blend = 0.43
 fog_density = 0.074
 fog_color = Color(0.153708, 0.153354, 0.200375, 0.101961)
 fog_enabled = false
