@@ -42,12 +42,35 @@ func _ready():
 			create_noise_texture()
 			setup_sky_shader()
 			update_sun_position()
+			
+			# Add explicit texture updates
+			if sun_texture:
+				var sky_material = world_environment.environment.sky.sky_material
+				sky_material.set_shader_parameter("sun_texture", sun_texture)
+				sky_material.set_shader_parameter("use_sun_texture", use_sun_texture)
+				
+			if moon_texture:
+				var sky_material = world_environment.environment.sky.sky_material
+				sky_material.set_shader_parameter("moon_texture", moon_texture)
+				sky_material.set_shader_parameter("use_moon_texture", use_moon_texture)
+				
 			_editor_setup_complete = true
 	else:
 		# Game runtime code
 		create_noise_texture()
 		setup_sky_shader()
 		update_sun_position()
+		
+		# Same texture updates for runtime
+		if sun_texture:
+			var sky_material = world_environment.environment.sky.sky_material
+			sky_material.set_shader_parameter("sun_texture", sun_texture)
+			sky_material.set_shader_parameter("use_sun_texture", use_sun_texture)
+			
+		if moon_texture:
+			var sky_material = world_environment.environment.sky.sky_material
+			sky_material.set_shader_parameter("moon_texture", moon_texture)
+			sky_material.set_shader_parameter("use_moon_texture", use_moon_texture)
 
 func _process(delta):
 	if Engine.is_editor_hint():
@@ -290,7 +313,7 @@ func update_sun_position():
 		if world_environment and world_environment.environment:
 			world_environment.environment.fog_light_color = value
 
-@export var fog_enabled: bool = true:
+@export var fog_enabled: bool = false:
 	set(value):
 		fog_enabled = value
 		if world_environment and world_environment.environment:

@@ -5,7 +5,7 @@
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_qdhlh"]
 noise_type = 3
-seed = 1291469584
+seed = -1165426268
 frequency = 0.005
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_i0ry3"]
@@ -48,7 +48,6 @@ sky_material = SubResource("ShaderMaterial_m367o")
 [sub_resource type="Environment" id="Environment_m0h8m"]
 background_mode = 2
 sky = SubResource("Sky_45ee3")
-fog_enabled = true
 fog_light_color = Color(0.5, 0.5, 0.6, 0.1)
 
 [node name="FastSky" type="Node3D"]
