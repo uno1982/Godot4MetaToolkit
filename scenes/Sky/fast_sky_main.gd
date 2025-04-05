@@ -105,6 +105,7 @@ func create_noise_texture():
 func setup_sky_shader():
 	# Create shader material
 	var sky_material = ShaderMaterial.new()
+	# Lookup Sky Shader
 	sky_material.shader = load("res://scenes/sky/sky_shader.gdshader")  # Path to the shader
 	
 	# Create sky
