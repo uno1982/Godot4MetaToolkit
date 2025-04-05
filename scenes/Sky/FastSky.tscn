@@ -1,20 +1,22 @@
-[gd_scene load_steps=8 format=3 uid="uid://fblcle4cgh20"]
+[gd_scene load_steps=10 format=3 uid="uid://fblcle4cgh20"]
 
 [ext_resource type="Script" uid="uid://bg8rtjqrgn1u5" path="res://scenes/Sky/fast_sky_main.gd" id="1_p1ew4"]
 [ext_resource type="Shader" uid="uid://cwguj0qluig0r" path="res://scenes/Sky/sky_shader.gdshader" id="2_qdhlh"]
+[ext_resource type="Texture2D" uid="uid://btno3xkhx82ol" path="res://scenes/Sky/textures/Moon.png" id="3_m367o"]
+[ext_resource type="Texture2D" uid="uid://c2qiwgoh17uae" path="res://scenes/Sky/textures/Sun.png" id="4_45ee3"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_qdhlh"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_m367o"]
 noise_type = 3
-seed = -1165426268
+seed = -2122003838
 frequency = 0.005
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_i0ry3"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_45ee3"]
 width = 128
 height = 128
 seamless = true
-noise = SubResource("FastNoiseLite_qdhlh")
+noise = SubResource("FastNoiseLite_m367o")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_m367o"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qnslq"]
 shader = ExtResource("2_qdhlh")
 shader_parameter/day_top_color = Color(0.3, 0.5, 0.95, 1)
 shader_parameter/day_bottom_color = Color(0.6, 0.8, 1, 1)
@@ -22,33 +24,36 @@ shader_parameter/sunset_top_color = Color(0.26, 0.24, 0.38, 1)
 shader_parameter/sunset_bottom_color = Color(0.95, 0.33, 0.15, 1)
 shader_parameter/night_top_color = Color(0.02, 0.02, 0.05, 1)
 shader_parameter/night_bottom_color = Color(0.05, 0.05, 0.1, 1)
-shader_parameter/cloud_edge_softness = 0.1
-shader_parameter/cloud_coverage = 0.5
-shader_parameter/cloud_speed = 0.01
+shader_parameter/cloud_edge_softness = 1.0
+shader_parameter/cloud_coverage = 0.0
+shader_parameter/cloud_speed = 0.315
 shader_parameter/cloud_movement_direction = Vector2(1, 0)
-shader_parameter/cloud_noise_texture = SubResource("NoiseTexture2D_i0ry3")
-shader_parameter/horizon_blend = 0.1
-shader_parameter/sun_size = 0.01
-shader_parameter/sun_halo = 0.2
-shader_parameter/moon_size = 0.01
-shader_parameter/moon_halo = 0.2
-shader_parameter/use_moon_shadows = false
-shader_parameter/time_of_day = 0.5
-shader_parameter/use_stars = false
-shader_parameter/stars_intensity = 1.0
+shader_parameter/cloud_noise_texture = SubResource("NoiseTexture2D_45ee3")
+shader_parameter/horizon_blend = 0.23
+shader_parameter/sun_size = 0.001
+shader_parameter/sun_halo = 0.53
+shader_parameter/moon_size = 0.001
+shader_parameter/moon_halo = 0.08
+shader_parameter/use_moon_shadows = true
+shader_parameter/time_of_day = 0.24
+shader_parameter/use_stars = true
+shader_parameter/stars_intensity = 1.5
 shader_parameter/stars_color = Color(1, 1, 1, 1)
-shader_parameter/use_sun_texture = false
+shader_parameter/use_sun_texture = true
+shader_parameter/sun_texture = ExtResource("4_45ee3")
 shader_parameter/sun_texture_size = 0.05
-shader_parameter/use_moon_texture = false
+shader_parameter/use_moon_texture = true
+shader_parameter/moon_texture = ExtResource("3_m367o")
 shader_parameter/moon_texture_size = 0.05
 
-[sub_resource type="Sky" id="Sky_45ee3"]
-sky_material = SubResource("ShaderMaterial_m367o")
+[sub_resource type="Sky" id="Sky_m0h8m"]
+sky_material = SubResource("ShaderMaterial_qnslq")
 
 [sub_resource type="Environment" id="Environment_m0h8m"]
 background_mode = 2
-sky = SubResource("Sky_45ee3")
+sky = SubResource("Sky_m0h8m")
 fog_light_color = Color(0.5, 0.5, 0.6, 0.1)
+fog_density = 0.074
 
 [node name="FastSky" type="Node3D"]
 script = ExtResource("1_p1ew4")
@@ -61,5 +66,5 @@ transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 
 light_energy = 0.8
 shadow_enabled = true
 shadow_opacity = 0.61
-shadow_blur = 0.0
+shadow_blur = 0.1
 directional_shadow_max_distance = 36.0

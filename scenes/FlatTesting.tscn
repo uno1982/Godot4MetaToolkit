@@ -1,19 +1,18 @@
-[gd_scene load_steps=19 format=3 uid="uid://br0wtdhe5wtx"]
+[gd_scene load_steps=18 format=3 uid="uid://dnpk7b8w1jye8"]
 
-[ext_resource type="Script" uid="uid://h5ktq382xcfd" path="res://scripts/main_vr_init.gd" id="1_x2jji"]
-[ext_resource type="PackedScene" uid="uid://b8qu42svaivr1" path="res://scenes/VRPlayer.tscn" id="2_34yur"]
-[ext_resource type="Texture2D" uid="uid://bw6v4d6agwcyp" path="res://textures/tilenormal.jpg" id="3_03mss"]
-[ext_resource type="PackedScene" uid="uid://fblcle4cgh20" path="res://scenes/Sky/FastSky.tscn" id="3_34yur"]
-[ext_resource type="Texture2D" uid="uid://btno3xkhx82ol" path="res://scenes/Sky/textures/Moon.png" id="4_3dvue"]
-[ext_resource type="Texture2D" uid="uid://c2qiwgoh17uae" path="res://scenes/Sky/textures/Sun.png" id="4_qyvno"]
-[ext_resource type="Texture2D" uid="uid://br3wcdmcb663w" path="res://textures/sci_fi_normal.jpg" id="4_ux2iu"]
+[ext_resource type="Texture2D" uid="uid://bw6v4d6agwcyp" path="res://textures/tilenormal.jpg" id="3_yexl2"]
+[ext_resource type="Texture2D" uid="uid://br3wcdmcb663w" path="res://textures/sci_fi_normal.jpg" id="4_0ck00"]
+[ext_resource type="PackedScene" uid="uid://fblcle4cgh20" path="res://scenes/Sky/FastSky.tscn" id="5_3ot10"]
+[ext_resource type="Texture2D" uid="uid://c2qiwgoh17uae" path="res://scenes/Sky/textures/Sun.png" id="6_1k0sw"]
+[ext_resource type="PackedScene" uid="uid://b6dapij8f1iye" path="res://addons/Basic FPS Player/FPSPlayer.tscn" id="6_j7tb8"]
+[ext_resource type="Texture2D" uid="uid://btno3xkhx82ol" path="res://scenes/Sky/textures/Moon.png" id="7_ss6ka"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1daua"]
 albedo_color = Color(0.458405, 0.458405, 0.458405, 1)
 metallic_specular = 0.0
 normal_enabled = true
 normal_scale = 4.09
-normal_texture = ExtResource("3_03mss")
+normal_texture = ExtResource("3_yexl2")
 uv1_scale = Vector3(200, 200, 1)
 distance_fade_min_distance = 28.25
 
@@ -21,7 +20,7 @@ distance_fade_min_distance = 28.25
 albedo_color = Color(0.572549, 0.572549, 0.572549, 1)
 metallic_specular = 0.0
 normal_enabled = true
-normal_texture = ExtResource("4_ux2iu")
+normal_texture = ExtResource("4_0ck00")
 uv1_scale = Vector3(3, 1.905, 1)
 uv1_offset = Vector3(1.01, 0.06, 0)
 
@@ -35,7 +34,7 @@ size = Vector3(82.3757, 1, 58.3628)
 albedo_color = Color(0.572988, 0.572988, 0.572988, 1)
 metallic_specular = 0.0
 normal_enabled = true
-normal_texture = ExtResource("3_03mss")
+normal_texture = ExtResource("3_yexl2")
 uv1_scale = Vector3(5, 5, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_x2jji"]
@@ -50,7 +49,7 @@ size = Vector3(1.92773, 1, 1)
 albedo_color = Color(0.572549, 0.572549, 0.572549, 1)
 metallic_specular = 0.0
 normal_enabled = true
-normal_texture = ExtResource("3_03mss")
+normal_texture = ExtResource("3_yexl2")
 uv1_scale = Vector3(10, 10, 1)
 
 [sub_resource type="PrismMesh" id="PrismMesh_x2jji"]
@@ -62,9 +61,6 @@ size = Vector3(2.39, 0.51, 1)
 size = Vector3(2.48102, 0.518555, 1)
 
 [node name="Main" type="Node3D"]
-script = ExtResource("1_x2jji")
-
-[node name="VRPlayer" parent="." instance=ExtResource("2_34yur")]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2, 0)
@@ -111,11 +107,11 @@ mesh = SubResource("PrismMesh_x2jji")
 transform = Transform3D(0.976785, -0.214131, -0.00618812, 0.214198, 0.976693, 0.0138127, 0.00308621, -0.0148176, 0.999886, 0.0132384, -0.259861, -7.7486e-05)
 shape = SubResource("BoxShape3D_34yur")
 
-[node name="FastSky" parent="." instance=ExtResource("3_34yur")]
-time_of_day = 0.24
-cloud_coverage = 0.0
+[node name="FastSky" parent="." instance=ExtResource("5_3ot10")]
+time_of_day = 0.66
+cloud_coverage = 0.26
 cloud_edge_softness = 1.0
-cloud_speed = 0.315
+cloud_speed = 0.955
 use_stars = true
 stars_intensity = 1.5
 sun_size = 0.001
@@ -123,12 +119,14 @@ sun_halo = 0.53
 moon_size = 0.001
 moon_halo = 0.08
 use_moon_shadows = true
-horizon_blend = 0.23
+horizon_blend = 0.26
 fog_density = 0.074
 fog_color = Color(0.153708, 0.153354, 0.200375, 0.101961)
 use_sun_texture = true
-sun_texture = ExtResource("4_qyvno")
+sun_texture = ExtResource("6_1k0sw")
 sun_texture_size = 0.21
 use_moon_texture = true
-moon_texture = ExtResource("4_3dvue")
+moon_texture = ExtResource("7_ss6ka")
 moon_texture_size = 0.08
+
+[node name="Basic FPS Player" parent="." instance=ExtResource("6_j7tb8")]

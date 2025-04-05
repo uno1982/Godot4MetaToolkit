@@ -8,7 +8,7 @@ var xr_frame_rate : float = 0
 @export var physics_rate_multiplier : int = 1
 
 ## If non-zero, specifies the target refresh rate
-@export var target_refresh_rate : float = 120
+@export var target_refresh_rate : float = 72
 
 #this is the main init script for a VR Scene
 func _ready():
@@ -20,6 +20,10 @@ func _ready():
 		# Set the XR frame rate
 		_set_xr_frame_rate()
 		get_viewport().use_xr = true
+		#output the rendering scale to the logger
+		var rendering_scale = get_viewport().scaling_3d_scale
+		print("Current XR rendering scale: " + str(rendering_scale * 100) + "%")
+		check_rendering_resolution()
 	else:
 		print("HMD Not Connected! Check Meta link or Steamvr connection")
 		
@@ -50,8 +54,15 @@ func _set_xr_frame_rate() -> void:
 	# Pick a physics rate
 	var active_rate := xr_frame_rate if xr_frame_rate > 0 else 144.0
 	var physics_rate := int(round(active_rate * physics_rate_multiplier))
+	#hard code physics tick rate for now
+	#physics_rate = 72.0
 	print("StartXR: Setting physics rate to ", physics_rate)
 	Engine.physics_ticks_per_second = physics_rate
+
+func check_rendering_resolution():
+	var viewport = get_viewport()
+	var size = viewport.get_visible_rect().size
+	print("Rendering at: " + str(size.x) + "x" + str(size.y))
 	
 # Find the closest value in the array to the target
 func _find_closest(values : Array, target : float) -> float:

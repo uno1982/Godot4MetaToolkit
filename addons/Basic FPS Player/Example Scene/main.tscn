@@ -1,0 +1,60 @@
+[gd_scene load_steps=10 format=3 uid="uid://vupfism0y8ub"]
+
+[ext_resource type="PackedScene" uid="uid://b6dapij8f1iye" path="res://addons/Basic FPS Player/FPSPlayer.tscn" id="1_hh7m2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_caja7"]
+size = Vector3(50, 0, 50)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6b5j0"]
+size = Vector2(50, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh_i1cfu"]
+
+[sub_resource type="Gradient" id="Gradient_t6m8x"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o7yir"]
+gradient = SubResource("Gradient_t6m8x")
+fill_from = Vector2(0.401099, 1)
+fill_to = Vector2(0.450549, 0)
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_msuu0"]
+panorama = SubResource("GradientTexture2D_o7yir")
+
+[sub_resource type="Sky" id="Sky_4ggmq"]
+sky_material = SubResource("PanoramaSkyMaterial_msuu0")
+
+[sub_resource type="Environment" id="Environment_4mccc"]
+sky = SubResource("Sky_4ggmq")
+ambient_light_source = 3
+
+[node name="main" type="Node3D"]
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="Collider" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_caja7")
+
+[node name="Mesh" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("PlaneMesh_6b5j0")
+
+[node name="Cube" type="MeshInstance3D" parent="."]
+transform = Transform3D(8.608, 5.25034, 0.847749, -5.28845, 8.62094, 0.306904, -0.563037, -0.704172, 10.0782, -12.3987, 6.30559, 0)
+mesh = SubResource("BoxMesh_i1cfu")
+
+[node name="Cube2" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.3394, -7.04204, 6.8789, 0.399539, 7.13256, 7.16585, -9.83616, -1.38514, 1.92713, 9.80706, 5.95309, -16.603)
+mesh = SubResource("BoxMesh_i1cfu")
+
+[node name="Cube3" type="MeshInstance3D" parent="."]
+transform = Transform3D(4.27484, -1.58703, 4.62899, 3.90354, 4.81261, -1.9549, -2.95104, 4.067, 4.11962, 14.8415, 5.95309, 8.53617)
+mesh = SubResource("BoxMesh_i1cfu")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.993258, 0.115925, 0, -0.115925, -0.993258, 1.99157, 9.78125, -4.48814)
+shadow_enabled = true
+
+[node name="Enivroment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_4mccc")
+
+[node name="Basic FPS Player" parent="." instance=ExtResource("1_hh7m2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
