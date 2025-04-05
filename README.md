@@ -6,6 +6,7 @@ This project is best ran on HMDs in compatability renderer.
 
 - Quest 2 and 3 can run mobile rendering @ 72hz
 - Anything above 72hz becomes quite taxing on the Q2 in mobile rendering
+- Currently set to Mobile Rendering & MSAA 4x (running smooth on quest 3)
 
 > Rendering Features | Tools
 
