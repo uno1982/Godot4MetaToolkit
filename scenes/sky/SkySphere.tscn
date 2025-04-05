@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://dqd40ieyk2ifn"]
+
+[ext_resource type="Texture2D" uid="uid://ce51644t0j12s" path="res://scenes/sky/textures/belfast_sunset_puresky_1k.exr" id="1_lluf8"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_vvt46"]
+panorama = ExtResource("1_lluf8")
+
+[sub_resource type="Sky" id="Sky_g27v3"]
+sky_material = SubResource("PanoramaSkyMaterial_vvt46")
+
+[sub_resource type="Environment" id="Environment_p25i2"]
+background_mode = 2
+sky = SubResource("Sky_g27v3")
+adjustment_enabled = true
+
+[node name="SkySphere" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_p25i2")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.546292, 0.00461953, -0.837582, 0.837595, -0.00301293, 0.546284, 0, -0.999985, -0.00551523, 0, 0, 0)
+light_color = Color(1, 1, 0.890196, 1)
+light_energy = 0.8
+shadow_enabled = true
+shadow_opacity = 0.61
+shadow_blur = 0.1
+directional_shadow_max_distance = 36.0
