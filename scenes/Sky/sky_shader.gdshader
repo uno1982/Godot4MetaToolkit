@@ -1,5 +1,5 @@
 shader_type sky;
-render_mode use_half_res_pass;
+render_mode use_quarter_res_pass;
 
 // Original sky parameters
 uniform vec3 day_top_color : source_color = vec3(0.3, 0.5, 0.95);

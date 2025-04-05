@@ -97,8 +97,8 @@ func create_noise_texture():
 	noise.frequency = 0.005
 	
 	noise_texture = NoiseTexture2D.new()
-	noise_texture.width = 128
-	noise_texture.height = 128
+	noise_texture.width = 32
+	noise_texture.height = 32
 	noise_texture.seamless = true
 	noise_texture.noise = noise
 
