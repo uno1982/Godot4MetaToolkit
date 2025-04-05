@@ -53,7 +53,8 @@ Jump={
 
 [rendering]
 
-renderer/rendering_method="mobile"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality.mobile=2
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality.mobile=2
@@ -64,4 +65,6 @@ anti_aliasing/screen_space_roughness_limiter/enabled=false
 
 openxr/enabled=true
 openxr/reference_space=2
+openxr/foveation_level=2
+openxr/foveation_dynamic=true
 shaders/enabled=true
