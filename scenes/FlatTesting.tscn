@@ -2,10 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://bw6v4d6agwcyp" path="res://textures/tilenormal.jpg" id="3_yexl2"]
 [ext_resource type="Texture2D" uid="uid://br3wcdmcb663w" path="res://textures/sci_fi_normal.jpg" id="4_0ck00"]
-[ext_resource type="PackedScene" uid="uid://fblcle4cgh20" path="res://scenes/Sky/FastSky.tscn" id="5_3ot10"]
-[ext_resource type="Texture2D" uid="uid://c2qiwgoh17uae" path="res://scenes/Sky/textures/Sun.png" id="6_1k0sw"]
-[ext_resource type="PackedScene" uid="uid://b6dapij8f1iye" path="res://addons/Basic FPS Player/FPSPlayer.tscn" id="6_j7tb8"]
-[ext_resource type="Texture2D" uid="uid://btno3xkhx82ol" path="res://scenes/Sky/textures/Moon.png" id="7_ss6ka"]
+[ext_resource type="PackedScene" uid="uid://fblcle4cgh20" path="res://scenes/sky/FastSky.tscn" id="5_3ot10"]
+[ext_resource type="Texture2D" uid="uid://c2qiwgoh17uae" path="res://scenes/sky/textures/Sun.png" id="6_1k0sw"]
+[ext_resource type="PackedScene" uid="uid://b6dapij8f1iye" path="res://scenes/players/FPSPlayer.tscn" id="6_j7tb8"]
+[ext_resource type="Texture2D" uid="uid://btno3xkhx82ol" path="res://scenes/sky/textures/Moon.png" id="7_ss6ka"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1daua"]
 albedo_color = Color(0.458405, 0.458405, 0.458405, 1)

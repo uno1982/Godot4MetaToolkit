@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=3 uid="uid://fblcle4cgh20"]
 
-[ext_resource type="Script" uid="uid://bg8rtjqrgn1u5" path="res://scenes/Sky/fast_sky_main.gd" id="1_p1ew4"]
-[ext_resource type="Shader" uid="uid://cwguj0qluig0r" path="res://scenes/Sky/sky_shader.gdshader" id="2_qdhlh"]
-[ext_resource type="Texture2D" uid="uid://btno3xkhx82ol" path="res://scenes/Sky/textures/Moon.png" id="3_m367o"]
-[ext_resource type="Texture2D" uid="uid://c2qiwgoh17uae" path="res://scenes/Sky/textures/Sun.png" id="4_45ee3"]
+[ext_resource type="Script" uid="uid://bg8rtjqrgn1u5" path="res://scenes/sky/fast_sky_main.gd" id="1_p1ew4"]
+[ext_resource type="Shader" uid="uid://cwguj0qluig0r" path="res://scenes/sky/sky_shader.gdshader" id="2_qdhlh"]
+[ext_resource type="Texture2D" uid="uid://btno3xkhx82ol" path="res://scenes/sky/textures/Moon.png" id="3_m367o"]
+[ext_resource type="Texture2D" uid="uid://c2qiwgoh17uae" path="res://scenes/sky/textures/Sun.png" id="4_45ee3"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_m367o"]
 noise_type = 3

@@ -71,6 +71,7 @@ var tick = 0
 
 func _ready():
 	if Engine.is_editor_hint():
+		print("Returning early due to editor detection")
 		return
 
 	# Capture mouse if set to true
@@ -104,9 +105,19 @@ func _process(delta):
 		move_player(delta)
 		rotate_player(delta)
 
+func toggle_fullscreen():
+	var current_mode = DisplayServer.window_get_mode()
+	if current_mode != DisplayServer.WINDOW_MODE_FULLSCREEN:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+
 func _input(event):
 	if Engine.is_editor_hint():
 		return
+	if event is InputEventKey and event.pressed:
+		if event.keycode == KEY_F11:  # Use any key you prefer
+			toggle_fullscreen()
 		
 	# Listen for mouse movement and check if mouse is captured
 	if event is InputEventMouseMotion && Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:

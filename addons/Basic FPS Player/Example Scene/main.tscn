@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://vupfism0y8ub"]
 
-[ext_resource type="PackedScene" uid="uid://b6dapij8f1iye" path="res://addons/Basic FPS Player/FPSPlayer.tscn" id="1_hh7m2"]
+[ext_resource type="PackedScene" uid="uid://b6dapij8f1iye" path="res://scenes/players/FPSPlayer.tscn" id="1_hh7m2"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_caja7"]
 size = Vector3(50, 0, 50)

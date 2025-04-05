@@ -1,11 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://br0wtdhe5wtx"]
+[gd_scene load_steps=18 format=3 uid="uid://br0wtdhe5wtx"]
 
 [ext_resource type="Script" uid="uid://h5ktq382xcfd" path="res://scripts/main_vr_init.gd" id="1_x2jji"]
-[ext_resource type="PackedScene" uid="uid://b8qu42svaivr1" path="res://scenes/VRPlayer.tscn" id="2_34yur"]
 [ext_resource type="Texture2D" uid="uid://bw6v4d6agwcyp" path="res://textures/tilenormal.jpg" id="3_03mss"]
-[ext_resource type="PackedScene" uid="uid://fblcle4cgh20" path="res://scenes/Sky/FastSky.tscn" id="3_34yur"]
-[ext_resource type="Texture2D" uid="uid://btno3xkhx82ol" path="res://scenes/Sky/textures/Moon.png" id="4_3dvue"]
-[ext_resource type="Texture2D" uid="uid://c2qiwgoh17uae" path="res://scenes/Sky/textures/Sun.png" id="4_qyvno"]
+[ext_resource type="PackedScene" uid="uid://fblcle4cgh20" path="res://scenes/sky/FastSky.tscn" id="3_34yur"]
+[ext_resource type="Texture2D" uid="uid://btno3xkhx82ol" path="res://scenes/sky/textures/Moon.png" id="4_3dvue"]
+[ext_resource type="Texture2D" uid="uid://c2qiwgoh17uae" path="res://scenes/sky/textures/Sun.png" id="4_qyvno"]
 [ext_resource type="Texture2D" uid="uid://br3wcdmcb663w" path="res://textures/sci_fi_normal.jpg" id="4_ux2iu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1daua"]
@@ -63,8 +62,7 @@ size = Vector3(2.48102, 0.518555, 1)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_x2jji")
-
-[node name="VRPlayer" parent="." instance=ExtResource("2_34yur")]
+player_spawn_path = NodePath("PlayerSpawn")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2, 0)
@@ -112,7 +110,7 @@ transform = Transform3D(0.976785, -0.214131, -0.00618812, 0.214198, 0.976693, 0.
 shape = SubResource("BoxShape3D_34yur")
 
 [node name="FastSky" parent="." instance=ExtResource("3_34yur")]
-time_of_day = 0.24
+time_of_day = 0.25
 cloud_coverage = 0.0
 cloud_edge_softness = 1.0
 cloud_speed = 0.315
@@ -132,3 +130,5 @@ sun_texture_size = 0.21
 use_moon_texture = true
 moon_texture = ExtResource("4_3dvue")
 moon_texture_size = 0.08
+
+[node name="PlayerSpawn" type="Node3D" parent="."]
