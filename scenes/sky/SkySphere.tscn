@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqd40ieyk2ifn"]
+[gd_scene load_steps=10 format=3 uid="uid://dqd40ieyk2ifn"]
 
-[ext_resource type="Texture2D" uid="uid://ce51644t0j12s" path="res://scenes/sky/textures/belfast_sunset_puresky_1k.exr" id="1_lluf8"]
+[ext_resource type="Texture2D" uid="uid://piwm88jd05ft" path="res://scenes/sky/textures/autumn_field_puresky_1k.exr" id="1_lluf8"]
+[ext_resource type="Shader" uid="uid://eup5fmkmhwjf" path="res://scenes/sky/clouds.gdshader" id="2_g27v3"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_vvt46"]
 panorama = ExtResource("1_lluf8")
@@ -13,16 +14,48 @@ background_mode = 2
 sky = SubResource("Sky_g27v3")
 adjustment_enabled = true
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vvt46"]
+noise_type = 4
+seed = 710
+frequency = 0.0802
+fractal_ping_pong_strength = 3.205
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vvt46"]
+width = 16
+height = 16
+seamless = true
+seamless_blend_skirt = 1.0
+noise = SubResource("FastNoiseLite_vvt46")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g27v3"]
+render_priority = 0
+shader = ExtResource("2_g27v3")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_vvt46")
+shader_parameter/cloud_density = 0.283
+shader_parameter/edge_softness = 0.5
+shader_parameter/cloud_color = Color(1, 1, 1, 1)
+shader_parameter/time_scale = 0.072
+shader_parameter/detail_strength = 1.0
+shader_parameter/noise_scale = 0.01
+
+[sub_resource type="SphereMesh" id="SphereMesh_p25i2"]
+material = SubResource("ShaderMaterial_g27v3")
+radius = 200.0
+height = 400.0
+
 [node name="SkySphere" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_p25i2")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.546292, 0.00461953, -0.837582, 0.837595, -0.00301293, 0.546284, 0, -0.999985, -0.00551523, 0, 0, 0)
-light_color = Color(1, 1, 0.890196, 1)
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.740676, -0.426125, -0.519439, -2.94952e-08, -0.773132, 0.634245, -0.671863, 0.46977, 0.57264, 0, 0, 0)
 light_energy = 0.8
 shadow_enabled = true
 shadow_opacity = 0.61
 shadow_blur = 0.1
+directional_shadow_blend_splits = true
 directional_shadow_max_distance = 36.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_p25i2")

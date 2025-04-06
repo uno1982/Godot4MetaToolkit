@@ -1,8 +1,8 @@
 [gd_scene load_steps=16 format=3 uid="uid://dnpk7b8w1jye8"]
 
+[ext_resource type="Script" uid="uid://h5ktq382xcfd" path="res://scripts/main_vr_init.gd" id="1_27mce"]
 [ext_resource type="Texture2D" uid="uid://bw6v4d6agwcyp" path="res://textures/tilenormal.jpg" id="1_vfxhw"]
 [ext_resource type="Texture2D" uid="uid://br3wcdmcb663w" path="res://textures/sci_fi_normal.jpg" id="2_27mce"]
-[ext_resource type="PackedScene" uid="uid://b6dapij8f1iye" path="res://scenes/players/FPSPlayer.tscn" id="3_kacge"]
 [ext_resource type="PackedScene" uid="uid://dqd40ieyk2ifn" path="res://scenes/sky/SkySphere.tscn" id="4_68ddv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1daua"]
@@ -23,7 +23,9 @@ uv1_scale = Vector3(3, 1.905, 1)
 uv1_offset = Vector3(1.01, 0.06, 0)
 
 [sub_resource type="BoxMesh" id="BoxMesh_3m01o"]
+lightmap_size_hint = Vector2i(14, 21)
 material = SubResource("StandardMaterial3D_7mm3s")
+add_uv2 = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_x2jji"]
 size = Vector3(82.3757, 1, 58.3628)
@@ -36,6 +38,7 @@ normal_texture = ExtResource("1_vfxhw")
 uv1_scale = Vector3(5, 5, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_x2jji"]
+lightmap_size_hint = Vector2i(17, 19)
 material = SubResource("StandardMaterial3D_8bubv")
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_x2jji"]
@@ -51,7 +54,9 @@ normal_texture = ExtResource("1_vfxhw")
 uv1_scale = Vector3(10, 10, 1)
 
 [sub_resource type="PrismMesh" id="PrismMesh_x2jji"]
+lightmap_size_hint = Vector2i(20, 16)
 material = SubResource("StandardMaterial3D_6vsx5")
+add_uv2 = true
 left_to_right = 1.0
 size = Vector3(2.39, 0.51, 1)
 
@@ -59,6 +64,8 @@ size = Vector3(2.39, 0.51, 1)
 size = Vector3(2.48102, 0.518555, 1)
 
 [node name="Main" type="Node3D"]
+script = ExtResource("1_27mce")
+player_spawn_path = NodePath("PlayerSpawn")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2, 0)
@@ -105,6 +112,6 @@ mesh = SubResource("PrismMesh_x2jji")
 transform = Transform3D(0.976785, -0.214131, -0.00618812, 0.214198, 0.976693, 0.0138127, 0.00308621, -0.0148176, 0.999886, 0.0132384, -0.259861, -7.7486e-05)
 shape = SubResource("BoxShape3D_34yur")
 
-[node name="Basic FPS Player" parent="." instance=ExtResource("3_kacge")]
+[node name="PlayerSpawn" type="Node3D" parent="."]
 
 [node name="SkySphere" parent="." instance=ExtResource("4_68ddv")]

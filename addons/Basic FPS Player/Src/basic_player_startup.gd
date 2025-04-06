@@ -110,7 +110,9 @@ func toggle_fullscreen():
 	if current_mode != DisplayServer.WINDOW_MODE_FULLSCREEN:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
+		print("setting windowed mode 720p")
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		DisplayServer.window_set_size(Vector2i(1280, 720))
 
 func _input(event):
 	if Engine.is_editor_hint():
