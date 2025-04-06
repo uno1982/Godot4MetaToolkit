@@ -101,5 +101,6 @@ speed = 3.0
 sprint_multiplier = 1.5
 toggle_sprint_mode = false
 hmd_height = 1.5
+show_capsule = false
 capsule_color = Color(0.501242, 0.634331, 0.935977, 0.8)
 metadata/_custom_type_script = "uid://gvf05fwc3p2p"

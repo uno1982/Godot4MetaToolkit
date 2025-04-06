@@ -152,7 +152,8 @@ func _create_physics_body():
 	physics_body.collision_mask = 1   # Environment layer
 	physics_body.up_direction = Vector3.UP
 	physics_body.floor_stop_on_slope = true
-	physics_body.floor_max_angle = deg_to_rad(45.0)  # Maximum slope angle
+	physics_body.floor_max_angle = deg_to_rad(85.0)  # Maximum slope angle
+	physics_body.floor_snap_length = 3.5  # Better stair snapping
 	
 	# Add collision shape
 	collision_shape = CollisionShape3D.new()
@@ -310,7 +311,7 @@ func _physics_process(delta):
 		# Normalize to prevent diagonal movement from being faster
 		if move_dir.length() > 1.0:
 			move_dir = move_dir.normalized()
-	
+		
 	# ---- APPLY PHYSICS ----
 	# Apply gravity
 	if not physics_body.is_on_floor():

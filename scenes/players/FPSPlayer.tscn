@@ -4,9 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://kmyakts4l64t" path="res://addons/Basic FPS Player/Src/basic_player_head.tscn" id="2_2cmq1"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_li7ud"]
+radius = 0.326874
 
 [node name="Basic FPS Player" type="CharacterBody3D"]
+floor_max_angle = 1.309
+floor_snap_length = 3.5
 script = ExtResource("1_r8asr")
+HEAD_BOB_FREQUENCY = 0.4
+HEAD_BOB_AMPLITUDE = 0.005
 KEY_BIND_UP = "MoveForward"
 KEY_BIND_LEFT = "MoveLeft"
 KEY_BIND_RIGHT = "MoveRight"

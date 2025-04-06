@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://8r7u7essx2rv"]
+
+[ext_resource type="Texture2D" uid="uid://ykupl1fgrasm" path="res://BattleRoyal/textures/T_PolygonBattleRoyale_01_A.TGA" id="1_tfrpe"]
+
+[resource]
+resource_name = "M_PolygonBattleRoyale_01_A"
+specular_mode = 2
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_tfrpe")
+metallic_specular = 0.0
+emission_enabled = true
+rim = 0.33
+rim_tint = 1.0
+anisotropy = -1.0
+ao_light_affect = 0.52
+backlight = Color(0.581033, 0.581033, 0.581033, 1)
+grow_amount = -3.51
+proximity_fade_distance = 0.01
+distance_fade_min_distance = 105.71

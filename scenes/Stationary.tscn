@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://dnpk7b8w1jye8"]
+[gd_scene load_steps=17 format=3 uid="uid://dnpk7b8w1jye8"]
 
 [ext_resource type="Script" uid="uid://h5ktq382xcfd" path="res://scripts/main_vr_init.gd" id="1_27mce"]
 [ext_resource type="Texture2D" uid="uid://bw6v4d6agwcyp" path="res://textures/tilenormal.jpg" id="1_vfxhw"]
 [ext_resource type="Texture2D" uid="uid://br3wcdmcb663w" path="res://textures/sci_fi_normal.jpg" id="2_27mce"]
 [ext_resource type="PackedScene" uid="uid://dqd40ieyk2ifn" path="res://scenes/sky/SkySphere.tscn" id="4_68ddv"]
+[ext_resource type="PackedScene" uid="uid://dw0bd63cupmu5" path="res://BattleRoyal/sm_bld_house_01.tscn" id="5_27mce"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1daua"]
 albedo_color = Color(0.458405, 0.458405, 0.458405, 1)
@@ -115,3 +116,6 @@ shape = SubResource("BoxShape3D_34yur")
 [node name="PlayerSpawn" type="Node3D" parent="."]
 
 [node name="SkySphere" parent="." instance=ExtResource("4_68ddv")]
+
+[node name="SM_Bld_House_01" parent="." instance=ExtResource("5_27mce")]
+transform = Transform3D(0.937245, 0, 0.34867, 0, 1, 0, -0.34867, 0, 0.937245, -19.3435, -0.821816, -10.5477)
