@@ -8,11 +8,13 @@ panorama = ExtResource("1_lluf8")
 
 [sub_resource type="Sky" id="Sky_g27v3"]
 sky_material = SubResource("PanoramaSkyMaterial_vvt46")
+radiance_size = 0
 
 [sub_resource type="Environment" id="Environment_p25i2"]
 background_mode = 2
 sky = SubResource("Sky_g27v3")
-adjustment_enabled = true
+fog_enabled = true
+fog_sky_affect = 0.192
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vvt46"]
 noise_type = 4
