@@ -18,6 +18,8 @@ This project is best ran on HMDs in compatability renderer.
 - VRPlayer for instant testing in VR with Physical Locomotion, jump, snap and smooth turning
 - FPSPlayer for testing and navigating maps without HMD
 
+Wild Ox Discord & Support https://discord.gg/gNaryjZwnZ
+
 This is a demo project demonstrating usage of the Meta Platform SDK in a Godot project. The framework was based of of the XR Meta Toolkit demo and Features all of the Platform SDK showcased included examples:
 
 - Achievements (simple, count, and bitfield)
