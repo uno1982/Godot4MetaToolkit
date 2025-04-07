@@ -1,4 +1,4 @@
-# Godot Meta Toolkit Demo
+# Wild Ox Godot VR/XR Template
 
 > Note: this project requires Godot 4.4 or later
 
@@ -18,7 +18,7 @@ This project is best ran on HMDs in compatability renderer.
 - VRPlayer for instant testing in VR with Physical Locomotion, jump, snap and smooth turning
 - FPSPlayer for testing and navigating maps without HMD
 
-This is a demo project demonstrating usage of the Meta Platform SDK in a Godot project. Features of the Platform SDK showcased include:
+This is a demo project demonstrating usage of the Meta Platform SDK in a Godot project. The framework was based of of the XR Meta Toolkit demo and Features all of the Platform SDK showcased included examples:
 
 - Achievements (simple, count, and bitfield)
 - Downloadable content
