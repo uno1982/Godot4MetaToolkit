@@ -16,7 +16,7 @@ class_name VRPhysicsLocomotion
 @export var gravity: float = 9.8  # Gravity strength
 @export var jump_strength: float = 4.0  # Jump force when jumping
 @export var allow_jumping: bool = true  # Enable/disable jumping functionality
-@export var hmd_height: float = 0.0  # Adjusts camera height: positive = higher, negative = lower
+@export var hmd_height_offset: float = 0.0  # Adjusts camera height: positive = higher, negative = lower
 
 # Physics settings
 @export var capsule_radius: float = 0.3  # Radius of the player's collision capsule
@@ -339,8 +339,10 @@ func _physics_process(delta):
 	xr_origin.global_position = physics_body.global_position - rotated_movement
 	
 	# Ensure the Y position of the XROrigin maintains the correct height
-	# This ensures the player's view is at the appropriate height relative to the floor
-	xr_origin.global_position.y = (physics_body.global_position.y - capsule_height/2) + hmd_height
+	# Old manual method
+	#xr_origin.global_position.y = (physics_body.global_position.y - capsule_height/2) + hmd_height
+	# Offset Method
+	xr_origin.global_position.y = physics_body.global_position.y + hmd_height_offset
 	
 	# Update our tracking position for the next frame
 	last_origin_position = xr_origin.global_position
