@@ -1,0 +1,20 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://mdsteogv71vt"]
+
+[ext_resource type="Texture2D" uid="uid://d27p6c2pak33h" path="res://assets/bedroom/textures/bedroom_96.png" id="1_1v1d2"]
+[ext_resource type="Texture2D" uid="uid://uiwmkbrgn800" path="res://assets/bedroom/textures/bedroom_97.png" id="2_sukxq"]
+[ext_resource type="Texture2D" uid="uid://di5ek2peb2lt7" path="res://assets/bedroom/textures/bedroom_99.png" id="3_vuwkm"]
+[ext_resource type="Texture2D" uid="uid://dxk1d1gs7isd2" path="res://assets/bedroom/textures/bedroom_98.png" id="4_5xvlo"]
+
+[resource]
+resource_name = "Door-WinFrames-"
+albedo_texture = ExtResource("1_1v1d2")
+metallic_specular = 0.05
+metallic_texture = ExtResource("2_sukxq")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_sukxq")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_vuwkm")
+normal_enabled = true
+normal_texture = ExtResource("4_5xvlo")
+ao_enabled = true
+ao_texture = ExtResource("2_sukxq")

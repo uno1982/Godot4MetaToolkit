@@ -1,0 +1,23 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://6r3156tdxuc1"]
+
+[ext_resource type="Texture2D" uid="uid://mhnvs100e0q4" path="res://assets/bedroom/textures/bedroom_76.png" id="1_vooj1"]
+[ext_resource type="Texture2D" uid="uid://bmva7h2oweb6f" path="res://assets/bedroom/textures/bedroom_77.png" id="2_28fgk"]
+[ext_resource type="Texture2D" uid="uid://ckxdq6s1ki2is" path="res://assets/bedroom/textures/bedroom_79.png" id="3_koxhn"]
+[ext_resource type="Texture2D" uid="uid://dmp0canxbefyu" path="res://assets/bedroom/textures/bedroom_78.png" id="4_itx23"]
+
+[resource]
+resource_name = "Desk-"
+albedo_texture = ExtResource("1_vooj1")
+metallic = 1.0
+metallic_specular = 0.16
+metallic_texture = ExtResource("2_28fgk")
+metallic_texture_channel = 2
+roughness = 0.34
+roughness_texture = ExtResource("2_28fgk")
+roughness_texture_channel = 1
+emission_enabled = true
+emission_texture = ExtResource("3_koxhn")
+normal_enabled = true
+normal_texture = ExtResource("4_itx23")
+ao_enabled = true
+ao_texture = ExtResource("2_28fgk")

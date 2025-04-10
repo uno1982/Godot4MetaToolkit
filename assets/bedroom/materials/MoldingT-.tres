@@ -1,0 +1,21 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://i1axwg1lm0s8"]
+
+[ext_resource type="Texture2D" uid="uid://7qa0ir2d4q4m" path="res://assets/bedroom/textures/bedroom_172.png" id="1_3pofu"]
+[ext_resource type="Texture2D" uid="uid://tk5yayvsye5c" path="res://assets/bedroom/textures/bedroom_173.png" id="2_qjxk5"]
+[ext_resource type="Texture2D" uid="uid://uq6277b4wknx" path="res://assets/bedroom/textures/bedroom_175.png" id="3_dyr2y"]
+[ext_resource type="Texture2D" uid="uid://bwp73g8ajgnu0" path="res://assets/bedroom/textures/bedroom_174.png" id="4_cyg1v"]
+
+[resource]
+resource_name = "MoldingT-"
+albedo_texture = ExtResource("1_3pofu")
+metallic_specular = 0.03
+metallic_texture = ExtResource("2_qjxk5")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_qjxk5")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_dyr2y")
+normal_enabled = true
+normal_texture = ExtResource("4_cyg1v")
+ao_enabled = true
+ao_texture = ExtResource("2_qjxk5")
+ao_texture_channel = 1

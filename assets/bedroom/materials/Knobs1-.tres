@@ -1,0 +1,23 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://dniwl08ghml5j"]
+
+[ext_resource type="Texture2D" uid="uid://cs61joc24178m" path="res://assets/bedroom/textures/bedroom_136.png" id="1_0esae"]
+[ext_resource type="Texture2D" uid="uid://b8n1gq4ticucb" path="res://assets/bedroom/textures/bedroom_137.png" id="2_ol4co"]
+[ext_resource type="Texture2D" uid="uid://isp5dgq3clug" path="res://assets/bedroom/textures/bedroom_139.png" id="3_gqgyo"]
+[ext_resource type="Texture2D" uid="uid://b8en2whnlf5q0" path="res://assets/bedroom/textures/bedroom_138.png" id="4_hxybm"]
+
+[resource]
+resource_name = "Knobs1-"
+albedo_texture = ExtResource("1_0esae")
+metallic = 0.68
+metallic_specular = 0.17
+metallic_texture = ExtResource("2_ol4co")
+metallic_texture_channel = 2
+roughness = 0.14
+roughness_texture = ExtResource("2_ol4co")
+roughness_texture_channel = 1
+emission_enabled = true
+emission_texture = ExtResource("3_gqgyo")
+normal_enabled = true
+normal_texture = ExtResource("4_hxybm")
+ao_enabled = true
+ao_texture = ExtResource("2_ol4co")

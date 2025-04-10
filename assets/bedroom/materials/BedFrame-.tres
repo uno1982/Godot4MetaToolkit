@@ -1,0 +1,21 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://b86tga3jvh5hl"]
+
+[ext_resource type="Texture2D" uid="uid://drwvfb52fkb6y" path="res://assets/bedroom/textures/bedroom_28.png" id="1_s27wm"]
+[ext_resource type="Texture2D" uid="uid://b1iaf7t0ycps3" path="res://assets/bedroom/textures/bedroom_29.png" id="2_kncge"]
+[ext_resource type="Texture2D" uid="uid://coxhtu33bc06i" path="res://assets/bedroom/textures/bedroom_31.png" id="3_umtuc"]
+[ext_resource type="Texture2D" uid="uid://1aj235os3vlt" path="res://assets/bedroom/textures/bedroom_30.png" id="4_5qyan"]
+
+[resource]
+resource_name = "BedFrame-"
+albedo_texture = ExtResource("1_s27wm")
+metallic = 0.58
+metallic_specular = 0.0
+metallic_texture = ExtResource("2_kncge")
+roughness_texture = ExtResource("2_kncge")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_umtuc")
+normal_enabled = true
+normal_scale = 0.78
+normal_texture = ExtResource("4_5qyan")
+ao_enabled = true
+ao_texture = ExtResource("2_kncge")

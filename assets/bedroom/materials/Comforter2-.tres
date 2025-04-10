@@ -1,0 +1,21 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://c588hoklywke6"]
+
+[ext_resource type="Texture2D" uid="uid://6a3ts5ehaun2" path="res://assets/bedroom/textures/bedroom_72.png" id="1_wm2qx"]
+[ext_resource type="Texture2D" uid="uid://brlhndw2stpln" path="res://assets/bedroom/textures/bedroom_73.png" id="2_hofxm"]
+[ext_resource type="Texture2D" uid="uid://cug035haiilm7" path="res://assets/bedroom/textures/bedroom_75.png" id="3_4pubs"]
+[ext_resource type="Texture2D" uid="uid://cn3cakkaekr7e" path="res://assets/bedroom/textures/bedroom_74.png" id="4_nrcrb"]
+
+[resource]
+resource_name = "Comforter2-"
+albedo_texture = ExtResource("1_wm2qx")
+metallic_specular = 0.57
+metallic_texture = ExtResource("2_hofxm")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_hofxm")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_4pubs")
+normal_enabled = true
+normal_scale = 4.24
+normal_texture = ExtResource("4_nrcrb")
+ao_texture = ExtResource("2_hofxm")
+ao_texture_channel = 1

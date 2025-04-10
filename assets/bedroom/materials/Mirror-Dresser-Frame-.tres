@@ -1,0 +1,22 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://b0r5jyqruvnp2"]
+
+[ext_resource type="Texture2D" uid="uid://fhe8pr6h17n0" path="res://assets/bedroom/textures/bedroom_164.png" id="1_oglfn"]
+[ext_resource type="Texture2D" uid="uid://bww3o60h3me67" path="res://assets/bedroom/textures/bedroom_165.png" id="2_000kx"]
+[ext_resource type="Texture2D" uid="uid://jrlhm1nxpchm" path="res://assets/bedroom/textures/bedroom_167.png" id="3_7juc4"]
+[ext_resource type="Texture2D" uid="uid://btewxrakmaqlq" path="res://assets/bedroom/textures/bedroom_166.png" id="4_g4lek"]
+
+[resource]
+resource_name = "Mirror-Dresser-Frame-"
+albedo_texture = ExtResource("1_oglfn")
+metallic = 0.26
+metallic_specular = 0.0
+metallic_texture = ExtResource("2_000kx")
+roughness = 0.89
+roughness_texture = ExtResource("2_000kx")
+roughness_texture_channel = 1
+emission_enabled = true
+emission_texture = ExtResource("3_7juc4")
+normal_enabled = true
+normal_texture = ExtResource("4_g4lek")
+ao_enabled = true
+ao_texture = ExtResource("2_000kx")

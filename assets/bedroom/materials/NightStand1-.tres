@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://cm826k7snc76p"]
+
+[ext_resource type="Texture2D" uid="uid://kcjdv1ksxef1" path="res://assets/bedroom/textures/bedroom_176.png" id="1_v68jl"]
+[ext_resource type="Texture2D" uid="uid://dogl0a06kre7s" path="res://assets/bedroom/textures/bedroom_177.png" id="2_o4k0d"]
+[ext_resource type="Texture2D" uid="uid://du0lgo1l1ncxy" path="res://assets/bedroom/textures/bedroom_179.png" id="3_eaifs"]
+[ext_resource type="Texture2D" uid="uid://ipc6u4hhdxss" path="res://assets/bedroom/textures/bedroom_178.png" id="4_o5hd7"]
+
+[resource]
+resource_name = "NightStand1-"
+albedo_texture = ExtResource("1_v68jl")
+metallic_texture = ExtResource("2_o4k0d")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_o4k0d")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_eaifs")
+normal_enabled = true
+normal_texture = ExtResource("4_o5hd7")
+ao_enabled = true
+ao_texture = ExtResource("2_o4k0d")

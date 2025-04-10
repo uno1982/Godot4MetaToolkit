@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://drphh1sx7cbio"]
+
+[ext_resource type="Texture2D" uid="uid://chlxmacoombc" path="res://assets/bedroom/textures/bedroom_24.png" id="1_3s326"]
+[ext_resource type="Texture2D" uid="uid://bkung7vn8tvm3" path="res://assets/bedroom/textures/bedroom_25.png" id="2_atb4y"]
+[ext_resource type="Texture2D" uid="uid://htsfsnviy1oj" path="res://assets/bedroom/textures/bedroom_27.png" id="3_ole65"]
+[ext_resource type="Texture2D" uid="uid://cxeqxs771y0op" path="res://assets/bedroom/textures/bedroom_26.png" id="4_841fr"]
+
+[resource]
+resource_name = "BBStrings-"
+albedo_texture = ExtResource("1_3s326")
+metallic_texture = ExtResource("2_atb4y")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_atb4y")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_ole65")
+normal_enabled = true
+normal_texture = ExtResource("4_841fr")
+ao_enabled = true
+ao_texture = ExtResource("2_atb4y")

@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://b6f0g5iw2ut0e"]
+
+[ext_resource type="Texture2D" uid="uid://5q3jfxvxwwq1" path="res://assets/bedroom/textures/bedroom_60.png" id="1_4u0vk"]
+[ext_resource type="Texture2D" uid="uid://gp7v5bauq4as" path="res://assets/bedroom/textures/bedroom_61.png" id="2_vi0cs"]
+[ext_resource type="Texture2D" uid="uid://cdot4vogc8dwo" path="res://assets/bedroom/textures/bedroom_63.png" id="3_4ggsg"]
+[ext_resource type="Texture2D" uid="uid://cvgc62eoa7w1i" path="res://assets/bedroom/textures/bedroom_62.png" id="4_n05o3"]
+
+[resource]
+resource_name = "Ceiling-"
+albedo_texture = ExtResource("1_4u0vk")
+metallic = 1.0
+metallic_texture = ExtResource("2_vi0cs")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_vi0cs")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_4ggsg")
+normal_enabled = true
+normal_texture = ExtResource("4_n05o3")
+ao_texture = ExtResource("2_vi0cs")

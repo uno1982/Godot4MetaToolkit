@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://bwtvpm8y7ghgi"]
+
+[ext_resource type="Texture2D" uid="uid://ykfxu23cuymi" path="res://assets/bedroom/textures/bedroom_40.png" id="1_88rel"]
+[ext_resource type="Texture2D" uid="uid://ck0n7eohkp1df" path="res://assets/bedroom/textures/bedroom_41.png" id="2_nbu0a"]
+[ext_resource type="Texture2D" uid="uid://gh5duwqijdi0" path="res://assets/bedroom/textures/bedroom_43.png" id="3_0yld7"]
+[ext_resource type="Texture2D" uid="uid://c84rpr4yflcdo" path="res://assets/bedroom/textures/bedroom_42.png" id="4_v8uto"]
+
+[resource]
+resource_name = "BlindsTop-"
+albedo_texture = ExtResource("1_88rel")
+metallic_texture = ExtResource("2_nbu0a")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_nbu0a")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_0yld7")
+normal_enabled = true
+normal_texture = ExtResource("4_v8uto")
+ao_enabled = true
+ao_texture = ExtResource("2_nbu0a")

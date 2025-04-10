@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://y62a1tnecxyh"]
+
+[ext_resource type="Texture2D" uid="uid://d2ykiughhu2tv" path="res://assets/bedroom/textures/bedroom_244.png" id="1_qk7b7"]
+[ext_resource type="Texture2D" uid="uid://20yakihg3yfd" path="res://assets/bedroom/textures/bedroom_245.png" id="2_0exy1"]
+[ext_resource type="Texture2D" uid="uid://dlvkh42ulkawu" path="res://assets/bedroom/textures/bedroom_247.png" id="3_s72n7"]
+[ext_resource type="Texture2D" uid="uid://8t1ew2q08vop" path="res://assets/bedroom/textures/bedroom_246.png" id="4_puqgm"]
+
+[resource]
+resource_name = "Wall1-"
+albedo_texture = ExtResource("1_qk7b7")
+metallic_texture = ExtResource("2_0exy1")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_0exy1")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_s72n7")
+normal_enabled = true
+normal_texture = ExtResource("4_puqgm")
+ao_enabled = true
+ao_texture = ExtResource("2_0exy1")

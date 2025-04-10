@@ -1,0 +1,21 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://cia4ox6h5i2yl"]
+
+[ext_resource type="Texture2D" uid="uid://d3qnewp5bh1v8" path="res://assets/bedroom/textures/bedroom_88.png" id="1_u7pcn"]
+[ext_resource type="Texture2D" uid="uid://dgbs50nhkodr6" path="res://assets/bedroom/textures/bedroom_89.png" id="2_cdyqx"]
+[ext_resource type="Texture2D" uid="uid://q0ipsuohmhyw" path="res://assets/bedroom/textures/bedroom_91.png" id="3_d7j8k"]
+[ext_resource type="Texture2D" uid="uid://dn6kv23461f0q" path="res://assets/bedroom/textures/bedroom_90.png" id="4_xfkn8"]
+
+[resource]
+resource_name = "DeskTrim-"
+albedo_texture = ExtResource("1_u7pcn")
+metallic_specular = 0.24
+metallic_texture = ExtResource("2_cdyqx")
+metallic_texture_channel = 2
+roughness = 0.55
+roughness_texture = ExtResource("2_cdyqx")
+roughness_texture_channel = 2
+emission_texture = ExtResource("3_d7j8k")
+normal_enabled = true
+normal_texture = ExtResource("4_xfkn8")
+ao_enabled = true
+ao_texture = ExtResource("2_cdyqx")

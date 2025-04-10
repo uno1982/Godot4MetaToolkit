@@ -1,0 +1,23 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://dtlvn6fdha564"]
+
+[ext_resource type="Texture2D" uid="uid://6cls6xp8ypcc" path="res://assets/bedroom/textures/bedroom_236.png" id="1_uhxeb"]
+[ext_resource type="Texture2D" uid="uid://cjguyarapc04l" path="res://assets/bedroom/textures/bedroom_237.png" id="2_6l0x6"]
+[ext_resource type="Texture2D" uid="uid://daxyfebyu3wdh" path="res://assets/bedroom/textures/bedroom_239.png" id="3_a2x21"]
+[ext_resource type="Texture2D" uid="uid://bnls028v3x1eq" path="res://assets/bedroom/textures/bedroom_238.png" id="4_6ykmw"]
+
+[resource]
+resource_name = "Pillow2-"
+albedo_texture = ExtResource("1_uhxeb")
+metallic_specular = 0.0
+metallic_texture = ExtResource("2_6l0x6")
+metallic_texture_channel = 2
+roughness = 0.65
+roughness_texture = ExtResource("2_6l0x6")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_a2x21")
+normal_enabled = true
+normal_scale = 4.68
+normal_texture = ExtResource("4_6ykmw")
+ao_enabled = true
+ao_texture = ExtResource("2_6l0x6")
+ao_on_uv2 = true

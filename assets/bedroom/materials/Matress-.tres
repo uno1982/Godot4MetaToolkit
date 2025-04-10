@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://6jgpq7s47fgm"]
+
+[ext_resource type="Texture2D" uid="uid://nacnsjiuir77" path="res://assets/bedroom/textures/bedroom_156.png" id="1_a7ejg"]
+[ext_resource type="Texture2D" uid="uid://dpxdnoe5hkwg7" path="res://assets/bedroom/textures/bedroom_157.png" id="2_6eksi"]
+[ext_resource type="Texture2D" uid="uid://msn1krprq1wh" path="res://assets/bedroom/textures/bedroom_159.png" id="3_3oyl3"]
+[ext_resource type="Texture2D" uid="uid://c8ltme71mdbvk" path="res://assets/bedroom/textures/bedroom_158.png" id="4_0lf6v"]
+
+[resource]
+resource_name = "Matress-"
+albedo_texture = ExtResource("1_a7ejg")
+metallic_texture = ExtResource("2_6eksi")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_6eksi")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_3oyl3")
+normal_enabled = true
+normal_texture = ExtResource("4_0lf6v")
+ao_enabled = true
+ao_texture = ExtResource("2_6eksi")

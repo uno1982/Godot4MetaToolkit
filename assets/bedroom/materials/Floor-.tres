@@ -1,0 +1,22 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://dcco0rfmfdvyi"]
+
+[ext_resource type="Texture2D" uid="uid://bj8moii5gai14" path="res://assets/bedroom/textures/bedroom_128.png" id="1_ybj60"]
+[ext_resource type="Texture2D" uid="uid://d22vko82ygpin" path="res://assets/bedroom/textures/bedroom_129.png" id="2_oaqcs"]
+[ext_resource type="Texture2D" uid="uid://3oxk6oc8d1do" path="res://assets/bedroom/textures/bedroom_131.png" id="3_eby4b"]
+[ext_resource type="Texture2D" uid="uid://cnd51ltjh1n16" path="res://assets/bedroom/textures/bedroom_130.png" id="4_gnyct"]
+
+[resource]
+resource_name = "Floor-"
+albedo_texture = ExtResource("1_ybj60")
+metallic_specular = 0.17
+metallic_texture = ExtResource("2_oaqcs")
+metallic_texture_channel = 2
+roughness = 0.81
+roughness_texture = ExtResource("2_oaqcs")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_eby4b")
+normal_enabled = true
+normal_scale = 0.65
+normal_texture = ExtResource("4_gnyct")
+ao_enabled = true
+ao_texture = ExtResource("2_oaqcs")

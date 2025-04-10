@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3 uid="uid://dsyr6be4ofww"]
+
+[ext_resource type="Texture2D" uid="uid://4bcljt3gglj1" path="res://assets/bedroom/textures/bedroom_161.png" id="1_16atg"]
+[ext_resource type="Texture2D" uid="uid://cxox2n0vrkmox" path="res://assets/bedroom/textures/bedroom_163.png" id="2_mcq65"]
+[ext_resource type="Texture2D" uid="uid://ykggex2daicr" path="res://assets/bedroom/textures/bedroom_162.png" id="3_jcgf8"]
+
+[resource]
+resource_name = "Mirror-"
+albedo_color = Color(0.219501, 0.219501, 0.219501, 1)
+metallic_specular = 1.0
+metallic_texture = ExtResource("1_16atg")
+metallic_texture_channel = 2
+roughness = 0.04
+roughness_texture = ExtResource("1_16atg")
+emission_texture = ExtResource("2_mcq65")
+normal_texture = ExtResource("3_jcgf8")
+ao_texture = ExtResource("1_16atg")

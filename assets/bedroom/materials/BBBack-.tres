@@ -1,0 +1,20 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://4ncy4wbjxree"]
+
+[ext_resource type="Texture2D" uid="uid://bf1qkyh0o6ib2" path="res://assets/bedroom/textures/bedroom_0.png" id="1_m3vca"]
+[ext_resource type="Texture2D" uid="uid://mhbeau42yhp0" path="res://assets/bedroom/textures/bedroom_1.png" id="2_k32rv"]
+[ext_resource type="Texture2D" uid="uid://df4n6fwuwk7oo" path="res://assets/bedroom/textures/bedroom_3.png" id="3_jvors"]
+[ext_resource type="Texture2D" uid="uid://cri2jj5kh7xpj" path="res://assets/bedroom/textures/bedroom_2.png" id="4_v7unv"]
+
+[resource]
+resource_name = "BBBack-"
+albedo_texture = ExtResource("1_m3vca")
+metallic_specular = 0.0
+metallic_texture = ExtResource("2_k32rv")
+metallic_texture_channel = 2
+roughness = 0.68
+roughness_texture = ExtResource("2_k32rv")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_jvors")
+normal_enabled = true
+normal_texture = ExtResource("4_v7unv")
+ao_texture = ExtResource("2_k32rv")

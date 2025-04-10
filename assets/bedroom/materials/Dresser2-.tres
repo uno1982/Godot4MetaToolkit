@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://b21eappu7saqa"]
+
+[ext_resource type="Texture2D" uid="uid://darfgysr2gr1b" path="res://assets/bedroom/textures/bedroom_112.png" id="1_uifs6"]
+[ext_resource type="Texture2D" uid="uid://dj3trnoor0ng" path="res://assets/bedroom/textures/bedroom_113.png" id="2_tyqby"]
+[ext_resource type="Texture2D" uid="uid://cwkj2nbt48qjc" path="res://assets/bedroom/textures/bedroom_115.png" id="3_85hpx"]
+[ext_resource type="Texture2D" uid="uid://c4dprchjny2nd" path="res://assets/bedroom/textures/bedroom_114.png" id="4_o87my"]
+
+[resource]
+resource_name = "Dresser2-"
+albedo_texture = ExtResource("1_uifs6")
+metallic_texture = ExtResource("2_tyqby")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_tyqby")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_85hpx")
+normal_enabled = true
+normal_texture = ExtResource("4_o87my")
+ao_enabled = true
+ao_texture = ExtResource("2_tyqby")

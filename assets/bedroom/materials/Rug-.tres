@@ -1,0 +1,22 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://pejnxt8hg08d"]
+
+[ext_resource type="Texture2D" uid="uid://tnj28gp24v68" path="res://assets/bedroom/textures/bedroom_240.png" id="1_twg2q"]
+[ext_resource type="Texture2D" uid="uid://68cuudrfcjd" path="res://assets/bedroom/textures/bedroom_241.png" id="2_gm826"]
+[ext_resource type="Texture2D" uid="uid://bihhmsldl7g68" path="res://assets/bedroom/textures/bedroom_243.png" id="3_85i6h"]
+[ext_resource type="Texture2D" uid="uid://1ijx458587ch" path="res://assets/bedroom/textures/bedroom_242.png" id="4_v4oy2"]
+
+[resource]
+resource_name = "Rug-"
+albedo_texture = ExtResource("1_twg2q")
+metallic_specular = 0.0
+metallic_texture = ExtResource("2_gm826")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_gm826")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_85i6h")
+normal_enabled = true
+normal_scale = 2.15
+normal_texture = ExtResource("4_v4oy2")
+ao_enabled = true
+ao_texture = ExtResource("2_gm826")
+ao_texture_channel = 2

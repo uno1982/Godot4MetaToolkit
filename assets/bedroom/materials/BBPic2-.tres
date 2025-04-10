@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://51tlxk6mj2j"]
+
+[ext_resource type="Texture2D" uid="uid://da0hfhgdvi30g" path="res://assets/bedroom/textures/bedroom_8.png" id="1_2ewro"]
+[ext_resource type="Texture2D" uid="uid://dnxy171bius5v" path="res://assets/bedroom/textures/bedroom_9.png" id="2_onvn7"]
+[ext_resource type="Texture2D" uid="uid://pyjcx13ylq07" path="res://assets/bedroom/textures/bedroom_11.png" id="3_t5e64"]
+[ext_resource type="Texture2D" uid="uid://brladfh4b3hl" path="res://assets/bedroom/textures/bedroom_10.png" id="4_1cmp4"]
+
+[resource]
+resource_name = "BBPic2-"
+albedo_texture = ExtResource("1_2ewro")
+metallic_texture = ExtResource("2_onvn7")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_onvn7")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_t5e64")
+normal_enabled = true
+normal_texture = ExtResource("4_1cmp4")
+ao_enabled = true
+ao_texture = ExtResource("2_onvn7")

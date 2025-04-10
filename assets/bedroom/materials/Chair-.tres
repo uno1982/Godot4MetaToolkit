@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://synwgdm1joni"]
+
+[ext_resource type="Texture2D" uid="uid://dqyolb2ee312u" path="res://assets/bedroom/textures/bedroom_64.png" id="1_y7lkc"]
+[ext_resource type="Texture2D" uid="uid://c56cvhhje0jtt" path="res://assets/bedroom/textures/bedroom_65.png" id="2_wwc0r"]
+[ext_resource type="Texture2D" uid="uid://l7cbuox8xxbr" path="res://assets/bedroom/textures/bedroom_67.png" id="3_ln6ny"]
+[ext_resource type="Texture2D" uid="uid://cf2pwhvtmhh38" path="res://assets/bedroom/textures/bedroom_66.png" id="4_kqqro"]
+
+[resource]
+resource_name = "Chair-"
+albedo_texture = ExtResource("1_y7lkc")
+metallic_specular = 0.15
+metallic_texture = ExtResource("2_wwc0r")
+metallic_texture_channel = 1
+roughness_texture = ExtResource("2_wwc0r")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_ln6ny")
+normal_enabled = true
+normal_texture = ExtResource("4_kqqro")
+ao_texture = ExtResource("2_wwc0r")

@@ -1,0 +1,22 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://bo64lkud3i6mt"]
+
+[ext_resource type="Texture2D" uid="uid://xki4pohiqjau" path="res://assets/bedroom/textures/bedroom_80.png" id="1_im3cy"]
+[ext_resource type="Texture2D" uid="uid://hfsx4veijyja" path="res://assets/bedroom/textures/bedroom_81.png" id="2_bthw1"]
+[ext_resource type="Texture2D" uid="uid://cdk4ddwcdb0kq" path="res://assets/bedroom/textures/bedroom_83.png" id="3_hifcp"]
+[ext_resource type="Texture2D" uid="uid://nxmlu7aj2xfj" path="res://assets/bedroom/textures/bedroom_82.png" id="4_eyl2v"]
+
+[resource]
+resource_name = "DeskHandle-"
+albedo_texture = ExtResource("1_im3cy")
+metallic = 0.33
+metallic_specular = 0.0
+metallic_texture = ExtResource("2_bthw1")
+roughness = 0.0
+roughness_texture = ExtResource("2_bthw1")
+roughness_texture_channel = 1
+emission_enabled = true
+emission_texture = ExtResource("3_hifcp")
+normal_enabled = true
+normal_texture = ExtResource("4_eyl2v")
+ao_enabled = true
+ao_texture = ExtResource("2_bthw1")

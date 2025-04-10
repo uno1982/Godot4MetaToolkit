@@ -1,0 +1,20 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://hgnftnmmj3dw"]
+
+[ext_resource type="Texture2D" uid="uid://kvr7x2nd20tf" path="res://assets/bedroom/textures/bedroom_124.png" id="1_a2mwd"]
+[ext_resource type="Texture2D" uid="uid://cnviupkv323ik" path="res://assets/bedroom/textures/bedroom_125.png" id="2_vf7xr"]
+[ext_resource type="Texture2D" uid="uid://m0i55ejs2ga6" path="res://assets/bedroom/textures/bedroom_127.png" id="3_wqbfo"]
+[ext_resource type="Texture2D" uid="uid://c5qigob6rt5ou" path="res://assets/bedroom/textures/bedroom_126.png" id="4_i8cj5"]
+
+[resource]
+resource_name = "FanHolder-"
+albedo_texture = ExtResource("1_a2mwd")
+metallic_texture = ExtResource("2_vf7xr")
+metallic_texture_channel = 2
+roughness = 0.35
+roughness_texture = ExtResource("2_vf7xr")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_wqbfo")
+normal_enabled = true
+normal_texture = ExtResource("4_i8cj5")
+ao_enabled = true
+ao_texture = ExtResource("2_vf7xr")

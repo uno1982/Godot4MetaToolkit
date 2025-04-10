@@ -1,0 +1,22 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://c686cm8n8768i"]
+
+[ext_resource type="Texture2D" uid="uid://c78gu5mximgqp" path="res://assets/bedroom/textures/bedroom_132.png" id="1_5fb8n"]
+[ext_resource type="Texture2D" uid="uid://ch7valds8wxp5" path="res://assets/bedroom/textures/bedroom_133.png" id="2_m81dg"]
+[ext_resource type="Texture2D" uid="uid://c5ptqlqw8ruhc" path="res://assets/bedroom/textures/bedroom_135.png" id="3_q72hq"]
+[ext_resource type="Texture2D" uid="uid://hst7l804i0r1" path="res://assets/bedroom/textures/bedroom_134.png" id="4_fm3u0"]
+
+[resource]
+resource_name = "Hinges-"
+albedo_texture = ExtResource("1_5fb8n")
+metallic_specular = 0.14
+metallic_texture = ExtResource("2_m81dg")
+metallic_texture_channel = 2
+roughness = 0.2
+roughness_texture = ExtResource("2_m81dg")
+roughness_texture_channel = 1
+emission_enabled = true
+emission_texture = ExtResource("3_q72hq")
+normal_enabled = true
+normal_texture = ExtResource("4_fm3u0")
+ao_enabled = true
+ao_texture = ExtResource("2_m81dg")

@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://dt4itwf1wjkux"]
+
+[ext_resource type="Texture2D" uid="uid://wvwkqvl8d8wr" path="res://assets/bedroom/textures/bedroom_260.png" id="1_lww2b"]
+[ext_resource type="Texture2D" uid="uid://c1fony0qmgqug" path="res://assets/bedroom/textures/bedroom_261.png" id="2_so4sh"]
+[ext_resource type="Texture2D" uid="uid://cbnyrp2mte7vu" path="res://assets/bedroom/textures/bedroom_263.png" id="3_m3dng"]
+[ext_resource type="Texture2D" uid="uid://dpa67ftiakguu" path="res://assets/bedroom/textures/bedroom_262.png" id="4_bovvb"]
+
+[resource]
+resource_name = "WindowLedge-"
+albedo_texture = ExtResource("1_lww2b")
+metallic_texture = ExtResource("2_so4sh")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_so4sh")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_m3dng")
+normal_enabled = true
+normal_texture = ExtResource("4_bovvb")
+ao_enabled = true
+ao_texture = ExtResource("2_so4sh")

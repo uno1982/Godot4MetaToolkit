@@ -1,0 +1,28 @@
+[remap]
+
+importer="2d_array_texture"
+type="CompressedTexture2DArray"
+uid="uid://bwn06mihj626"
+path.bptc="res://.godot/imported/Stationary.exr-f00d42a2200e617d6f5b329ecdcca587.bptc.ctexarray"
+path.astc="res://.godot/imported/Stationary.exr-f00d42a2200e617d6f5b329ecdcca587.astc.ctexarray"
+metadata={
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"vram_texture": true
+}
+
+[deps]
+
+source_file="res://assets/battleroyal/lightmaps/Stationary.exr"
+dest_files=["res://.godot/imported/Stationary.exr-f00d42a2200e617d6f5b329ecdcca587.bptc.ctexarray", "res://.godot/imported/Stationary.exr-f00d42a2200e617d6f5b329ecdcca587.astc.ctexarray"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/channel_pack=1
+mipmaps/generate=false
+mipmaps/limit=-1
+slices/horizontal=1
+slices/vertical=4

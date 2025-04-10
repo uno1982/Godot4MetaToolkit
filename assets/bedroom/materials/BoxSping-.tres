@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://b30wndgk86oi6"]
+
+[ext_resource type="Texture2D" uid="uid://b7yab5qdbnc37" path="res://assets/bedroom/textures/bedroom_56.png" id="1_5wnah"]
+[ext_resource type="Texture2D" uid="uid://doleupexow5h3" path="res://assets/bedroom/textures/bedroom_57.png" id="2_52au4"]
+[ext_resource type="Texture2D" uid="uid://bcgareu18wsno" path="res://assets/bedroom/textures/bedroom_59.png" id="3_wubry"]
+[ext_resource type="Texture2D" uid="uid://bq56nm3q8cghs" path="res://assets/bedroom/textures/bedroom_58.png" id="4_o8m42"]
+
+[resource]
+resource_name = "BoxSping-"
+albedo_texture = ExtResource("1_5wnah")
+metallic_texture = ExtResource("2_52au4")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_52au4")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_wubry")
+normal_enabled = true
+normal_texture = ExtResource("4_o8m42")
+ao_enabled = true
+ao_texture = ExtResource("2_52au4")

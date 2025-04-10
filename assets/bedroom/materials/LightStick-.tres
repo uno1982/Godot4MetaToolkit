@@ -1,0 +1,22 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://dak11tnset7ce"]
+
+[ext_resource type="Texture2D" uid="uid://xjfueyqkgx31" path="res://assets/bedroom/textures/bedroom_152.png" id="1_agroj"]
+[ext_resource type="Texture2D" uid="uid://cj0i0nxm8bd3o" path="res://assets/bedroom/textures/bedroom_153.png" id="2_07m4s"]
+[ext_resource type="Texture2D" uid="uid://pfd6uom1fsau" path="res://assets/bedroom/textures/bedroom_155.png" id="3_8se0p"]
+[ext_resource type="Texture2D" uid="uid://cs6diti78kchm" path="res://assets/bedroom/textures/bedroom_154.png" id="4_xukpx"]
+
+[resource]
+resource_name = "LightStick-"
+albedo_texture = ExtResource("1_agroj")
+metallic_specular = 0.18
+metallic_texture = ExtResource("2_07m4s")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_07m4s")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_8se0p")
+normal_enabled = true
+normal_texture = ExtResource("4_xukpx")
+ao_enabled = true
+ao_texture = ExtResource("2_07m4s")
+ao_on_uv2 = true
+ao_texture_channel = 1

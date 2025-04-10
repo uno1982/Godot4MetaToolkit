@@ -1,0 +1,23 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://did4xghuk3uyu"]
+
+[ext_resource type="Texture2D" uid="uid://c0kdl0wuxnfrn" path="res://assets/bedroom/textures/bedroom_148.png" id="1_ckmfd"]
+[ext_resource type="Texture2D" uid="uid://do545cfwewitq" path="res://assets/bedroom/textures/bedroom_149.png" id="2_o4t7p"]
+[ext_resource type="Texture2D" uid="uid://8imnsn8wlck1" path="res://assets/bedroom/textures/bedroom_151.png" id="3_4o24c"]
+[ext_resource type="Texture2D" uid="uid://dxy0te0wb3sh7" path="res://assets/bedroom/textures/bedroom_150.png" id="4_nh3w7"]
+
+[resource]
+resource_name = "LightBulbLamp-"
+albedo_texture = ExtResource("1_ckmfd")
+metallic_specular = 1.0
+metallic_texture = ExtResource("2_o4t7p")
+metallic_texture_channel = 2
+roughness = 0.03
+roughness_texture = ExtResource("2_o4t7p")
+roughness_texture_channel = 1
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 16.0
+emission_texture = ExtResource("3_4o24c")
+normal_enabled = true
+normal_texture = ExtResource("4_nh3w7")
+ao_texture = ExtResource("2_o4t7p")

@@ -1,0 +1,39 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://cny8x7l704wfn"
+path.s3tc="res://.godot/imported/bedroom_93.png-1bff72f86c227b7ef074c7921500539b.s3tc.ctex"
+path.etc2="res://.godot/imported/bedroom_93.png-1bff72f86c227b7ef074c7921500539b.etc2.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "4afb53e0b48bcef493701b0746cad0a3"
+}
+
+[deps]
+
+source_file="res://assets/bedroom/textures/bedroom_93.png"
+dest_files=["res://.godot/imported/bedroom_93.png-1bff72f86c227b7ef074c7921500539b.s3tc.ctex", "res://.godot/imported/bedroom_93.png-1bff72f86c227b7ef074c7921500539b.etc2.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=8
+roughness/src_normal="res://assets/bedroom/bedroom_94.png"
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

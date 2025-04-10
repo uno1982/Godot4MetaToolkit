@@ -1,0 +1,20 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://cvmdvkx80i35o"]
+
+[ext_resource type="Texture2D" uid="uid://rcx8ok4mku7q" path="res://assets/bedroom/textures/bedroom_264.png" id="1_gd6ep"]
+[ext_resource type="Texture2D" uid="uid://brhc8otp6q7vc" path="res://assets/bedroom/textures/bedroom_265.png" id="2_h0c04"]
+[ext_resource type="Texture2D" uid="uid://d0v48bd70abq3" path="res://assets/bedroom/textures/bedroom_267.png" id="3_0810p"]
+[ext_resource type="Texture2D" uid="uid://dsa1djj3y5rkq" path="res://assets/bedroom/textures/bedroom_266.png" id="4_kucy5"]
+
+[resource]
+resource_name = "Windows-"
+albedo_texture = ExtResource("1_gd6ep")
+metallic_texture = ExtResource("2_h0c04")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_h0c04")
+roughness_texture_channel = 1
+emission_enabled = true
+emission_texture = ExtResource("3_0810p")
+normal_enabled = true
+normal_texture = ExtResource("4_kucy5")
+ao_enabled = true
+ao_texture = ExtResource("2_h0c04")

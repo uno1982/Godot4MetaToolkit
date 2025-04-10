@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://ciaisd1jdhglg"]
+
+[ext_resource type="Texture2D" uid="uid://2nc446wbqhh7" path="res://assets/bedroom/textures/bedroom_36.png" id="1_k8nnt"]
+[ext_resource type="Texture2D" uid="uid://cbw2l386adlm8" path="res://assets/bedroom/textures/bedroom_37.png" id="2_w0vsg"]
+[ext_resource type="Texture2D" uid="uid://bjdba0nhratxm" path="res://assets/bedroom/textures/bedroom_39.png" id="3_p4btk"]
+[ext_resource type="Texture2D" uid="uid://0vyvmgvc80p" path="res://assets/bedroom/textures/bedroom_38.png" id="4_a86kx"]
+
+[resource]
+resource_name = "BlindsRibbon-"
+albedo_texture = ExtResource("1_k8nnt")
+metallic_texture = ExtResource("2_w0vsg")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_w0vsg")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_p4btk")
+normal_enabled = true
+normal_texture = ExtResource("4_a86kx")
+ao_enabled = true
+ao_texture = ExtResource("2_w0vsg")

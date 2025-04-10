@@ -1,0 +1,21 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://cggd504r85ph7"]
+
+[ext_resource type="Texture2D" uid="uid://koegh3oyll3r" path="res://assets/bedroom/textures/bedroom_84.png" id="1_h416n"]
+[ext_resource type="Texture2D" uid="uid://fyywycmfl6qy" path="res://assets/bedroom/textures/bedroom_85.png" id="2_futet"]
+[ext_resource type="Texture2D" uid="uid://rh6qs1o1hc5w" path="res://assets/bedroom/textures/bedroom_87.png" id="3_xl4s6"]
+[ext_resource type="Texture2D" uid="uid://ddywgyf7eqjuj" path="res://assets/bedroom/textures/bedroom_86.png" id="4_acy3h"]
+
+[resource]
+resource_name = "DeskTop-"
+albedo_texture = ExtResource("1_h416n")
+metallic_specular = 0.09
+metallic_texture = ExtResource("2_futet")
+metallic_texture_channel = 2
+roughness = 0.53
+roughness_texture = ExtResource("2_futet")
+roughness_texture_channel = 1
+emission_texture = ExtResource("3_xl4s6")
+normal_enabled = true
+normal_texture = ExtResource("4_acy3h")
+ao_enabled = true
+ao_texture = ExtResource("2_futet")
