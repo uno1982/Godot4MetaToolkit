@@ -25,7 +25,7 @@ uv1_scale = Vector3(3, 1.905, 1)
 uv1_offset = Vector3(1.01, 0.06, 0)
 
 [sub_resource type="BoxMesh" id="BoxMesh_3m01o"]
-lightmap_size_hint = Vector2i(1024, 1024)
+lightmap_size_hint = Vector2i(14, 21)
 material = SubResource("StandardMaterial3D_7mm3s")
 add_uv2 = true
 

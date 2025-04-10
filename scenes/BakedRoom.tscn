@@ -1250,7 +1250,7 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_cb6xn")
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_6bvae"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_dy8cc"]
 resource_name = "bedroom_Rug-"
 lightmap_size_hint = Vector2i(86, 90)
 _surfaces = [{
@@ -1270,7 +1270,7 @@ shadow_mesh = ExtResource("42_odxqa")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ehycm"]
 resource_name = "bedroom_Ceiling-"
-lightmap_size_hint = Vector2i(178, 178)
+lightmap_size_hint = Vector2i(32, 32)
 _surfaces = [{
 "aabb": AABB(-142, -142, 115, 284, 284, 1e-05),
 "attribute_data": PackedByteArray("/XJ9P6MAIzwDFzg7Axc4O6MAIzz9cn0/6Ud/P+lHfz+jACM8owAjPAMXODvpR38//XJ9P/1yfT/pR38/Axc4Ow=="),
@@ -1764,8 +1764,7 @@ skeleton = NodePath("")
 transform = Transform3D(25.4, 0, 0, 0, 0, 25.4, 0, -25.4, 0, 0, 0, 0)
 
 [node name="Rug-2" type="MeshInstance3D" parent="bedroom/RootNode/Rug-"]
-gi_mode = 2
-mesh = SubResource("ArrayMesh_6bvae")
+mesh = SubResource("ArrayMesh_dy8cc")
 skeleton = NodePath("")
 
 [node name="OutShell-" type="Node3D" parent="bedroom/RootNode"]
@@ -1896,7 +1895,9 @@ omni_range = 6.623
 omni_attenuation = -0.081
 
 [node name="LightmapGI" type="LightmapGI" parent="."]
+transform = Transform3D(0.996234, -0.0867037, 0, 0.0867037, 0.996234, 0, 0, 0, 1, 0, 0, 0)
 quality = 2
-bounces = 6
+bounces = 10
+directional = true
 interior = true
 light_data = ExtResource("46_yh3i4")

@@ -19,4 +19,4 @@ normal_scale = 2.15
 normal_texture = ExtResource("4_v4oy2")
 ao_enabled = true
 ao_texture = ExtResource("2_gm826")
-ao_texture_channel = 2
+ao_texture_channel = 1
