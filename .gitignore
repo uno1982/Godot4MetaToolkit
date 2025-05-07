@@ -3,3 +3,5 @@
 android/
 local.gd
 export_presets.cfg
+addons/godotopenxrvendors/.bin/windows/template_debug/x86_64/~libgodotopenxrvendors.dll
+addons/godot_meta_toolkit/.bin/windows/template_debug/x86_64/~libgodot_meta_toolkit.dll
