@@ -124,12 +124,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0, 0)
 script = ExtResource("4_3h15o")
 hand_type = 1
 drive_position = 0.5
+ring_color = Color(0.2, 0.4, 1, 0.8)
 
 [node name="GrabPointRight" type="Node3D" parent="GrippableObjects/GreenCube"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, 0, 0)
 script = ExtResource("4_3h15o")
 hand_type = 2
 drive_position = 1.0
+ring_color = Color(1, 0.2, 0.2, 0.8)
 
 [node name="BlueCylinder" type="RigidBody3D" parent="GrippableObjects"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.8, -0.8)
@@ -207,18 +209,21 @@ second_hand_behavior = 2
 highlight_mesh_instance = NodePath("../StaffMesh")
 
 [node name="GrabPointTopRight" type="Node3D" parent="GrippableObjects/Staff"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 script = ExtResource("4_3h15o")
 hand_type = 2
 grab_mode = 1
-drive_rotation = 90.0
-drive_aim = 90.0
+drive_position = 0.3
+drive_aim = 0.9
+ring_color = Color(1, 0.2, 0.2, 0.8)
 
 [node name="GrabPointBottomLeft" type="Node3D" parent="GrippableObjects/Staff"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 script = ExtResource("4_3h15o")
 hand_type = 1
-drive_rotation = 90.0
-drive_aim = 90.0
+grab_mode = 1
+drive_position = 0.3
+drive_aim = 0.9
+ring_color = Color(0.2, 0.4, 1, 0.8)
 
 [node name="Environment" type="Node3D" parent="."]
 
