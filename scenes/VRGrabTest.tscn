@@ -117,6 +117,7 @@ shape = SubResource("BoxShape3D_s85tj")
 
 [node name="Grippable" type="Node3D" parent="GrippableObjects/GreenCube"]
 script = ExtResource("2_a2doh")
+second_hand_behavior = 2
 highlight_mesh_instance = NodePath("../MeshInstance3D")
 
 [node name="GrabPointLeft" type="Node3D" parent="GrippableObjects/GreenCube"]
@@ -214,7 +215,7 @@ script = ExtResource("4_3h15o")
 hand_type = 2
 grab_mode = 1
 drive_position = 0.3
-drive_aim = 0.9
+drive_aim = 0.2
 ring_color = Color(1, 0.2, 0.2, 0.8)
 
 [node name="GrabPointBottomLeft" type="Node3D" parent="GrippableObjects/Staff"]

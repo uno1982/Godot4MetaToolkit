@@ -171,15 +171,39 @@ func can_be_grabbed_by(hand_collider):
 	elif hand_collider.name.to_lower().contains("right"):
 		hand_side = HandType.RIGHT
 	
-	# Check compatibility
+	# Debug logging
+	var hand_name = "unknown"
+	if hand_side == HandType.LEFT:
+		hand_name = "LEFT"
+	elif hand_side == HandType.RIGHT:
+		hand_name = "RIGHT"
+	else:
+		hand_name = "ANY"
+		
+	var point_name = "ANY"
+	if hand_type == HandType.LEFT:
+		point_name = "LEFT"
+	elif hand_type == HandType.RIGHT:
+		point_name = "RIGHT"
+	
+	print("Checking grab point compatibility: Hand [%s] trying to grab point [%s] (node: %s)" % [hand_name, point_name, name])
+	
+	# Strict enforcement of hand-specific grab points
+	if hand_type == HandType.LEFT and hand_side != HandType.LEFT:
+		print(" -> REJECTED: Left grab point cannot be grabbed by non-left hand")
+		return false
+	if hand_type == HandType.RIGHT and hand_side != HandType.RIGHT:
+		print(" -> REJECTED: Right grab point cannot be grabbed by non-right hand")
+		return false
+	
+	# ANY type grab points can be grabbed by any hand
 	if hand_type == HandType.ANY:
-		return true
-	elif hand_type == HandType.LEFT and hand_side == HandType.LEFT:
-		return true
-	elif hand_type == HandType.RIGHT and hand_side == HandType.RIGHT:
+		print(" -> ACCEPTED: Any-type grab point can be grabbed by any hand")
 		return true
 	
-	return false
+	# At this point, hand types must match (already checked above)
+	print(" -> ACCEPTED: Hand type matches grab point type")
+	return hand_type == hand_side
 
 # Show or hide the ring visual
 func set_ring_visible(visible: bool):

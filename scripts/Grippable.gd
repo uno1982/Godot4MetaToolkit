@@ -42,6 +42,7 @@ var original_collision_layer = 0 # Original collision layer before grabbed
 var original_collision_mask = 0 # Original collision mask before grabbed
 var active_grab_point = null # Currently active grab point
 var secondary_hands = [] # For multi-hand grabbing
+var secondary_grab_points = [] # Grab points for secondary hands
 
 # Physics properties
 @export var throw_impulse_factor: float = 1.5 # Factor for throwing velocity
@@ -88,7 +89,18 @@ func _physics_process(delta):
 		
 		# Apply different following behavior based on grab point
 		if is_instance_valid(active_grab_point):
-			 # Base the transform on the grabbing hand
+			# DEBUG: Print grab point info once every 30 frames
+			if Engine.get_frames_drawn() % 30 == 0:
+				print("=== PHYSICS UPDATE GRAB INFO ===")
+				print("Active grab point: " + active_grab_point.name)
+				print("Grab point type: " + str(active_grab_point.hand_type))
+				print("Hand: " + grabbed_by.name)
+				print("Grab mode: " + ("SNAP" if active_grab_point.grab_mode == GrabPoint.GrabMode.SNAP else "PRECISE"))
+				print("Grab point global position: " + str(active_grab_point.global_position))
+				print("Object position: " + str(grippable_object.global_position))
+				print("Hand position: " + str(grabbed_by.global_position))
+			
+			# Base the transform on the grabbing hand
 			var hand_transform = grabbed_by.global_transform
 			
 			if active_grab_point.grab_mode == GrabPoint.GrabMode.SNAP:
@@ -102,7 +114,6 @@ func _physics_process(delta):
 				
 				# Calculate the correct position by accounting for the grab point's offset
 				# Need to rotate the offset by the basis of the hand
-				var quat = target_transform.basis.get_rotation_quaternion()
 				var offset = - grab_point_local_transform.origin
 				
 				# Apply rotation to the offset vector using basis
@@ -110,11 +121,23 @@ func _physics_process(delta):
 				
 				target_transform.origin = hand_transform.origin + offset
 				
+				# Log the calculated position (once every 30 frames)
+				if Engine.get_frames_drawn() % 30 == 0:
+					print("SNAP mode - grab point local offset: " + str(grab_point_local_transform.origin))
+					print("Calculated offset in world space: " + str(offset))
+					print("Target position: " + str(target_transform.origin))
+				
 				# Apply the transform
 				grippable_object.global_transform = target_transform
 			else:
 				# PRECISE mode - object maintains offset from hand
 				var target_transform = grippable_object.global_transform
+				
+				 # Log the precise mode calculations (once every 30 frames)
+				if Engine.get_frames_drawn() % 30 == 0:
+					print("PRECISE mode - current transform: " + str(target_transform))
+					print("Drive position: " + str(active_grab_point.drive_position))
+					print("Drive rotation: " + str(active_grab_point.drive_rotation))
 				
 				# Apply drive settings
 				if active_grab_point.drive_position > 0.0:
@@ -135,6 +158,10 @@ func _physics_process(delta):
 					if angle > 0.001 and axis.length() > 0.001:
 						target_transform.basis = target_transform.basis.rotated(axis, angle)
 				
+				 # Log the final calculated transform (once every 30 frames)
+				if Engine.get_frames_drawn() % 30 == 0:
+					print("Final target transform: " + str(target_transform))
+				
 				# Apply the transform
 				grippable_object.global_transform = target_transform
 		else:
@@ -149,34 +176,152 @@ func _handle_two_handed_manipulation(grippable_object):
 	var primary_hand = grabbed_by
 	var secondary_hand = secondary_hands[0]
 	
+	# Get the grab points for both hands
+	var primary_grab_point = active_grab_point
+	var secondary_grab_point = null
+	
+	# Get the secondary hand's grab point
+	if secondary_grab_points.size() > 0:
+		secondary_grab_point = secondary_grab_points[0]
+	
+	# Debug logging
+	if Engine.get_frames_drawn() % 30 == 0:
+		print("==== TWO-HANDED DEBUG ====")
+		print("Primary hand: " + primary_hand.name)
+		print("Primary grab point: " + (primary_grab_point.name if primary_grab_point else "NONE"))
+		print("Secondary hand: " + secondary_hand.name)
+		print("Secondary grab point: " + (secondary_grab_point.name if secondary_grab_point else "NONE"))
+	
 	# Get the transforms of both hands
 	var primary_transform = primary_hand.global_transform
 	var secondary_transform = secondary_hand.global_transform
 	
-	# Calculate the midpoint between the two hands
-	var midpoint = (primary_transform.origin + secondary_transform.origin) / 2.0
+	# IMPORTANT: Skip the transform manipulation if we're in PRECISE mode
+	# Let each hand interact with its grab point naturally
+	if primary_grab_point and primary_grab_point.grab_mode == GrabPoint.GrabMode.PRECISE:
+		# For PRECISE mode, we need to make each hand directly control its grab point
+		var target_transform = grippable_object.global_transform
+		
+		# Debug the grab points
+		if Engine.get_frames_drawn() % 30 == 0:
+			print("PRECISE two-hand mode:")
+			print("  Primary hand: " + primary_hand.name + " at " + str(primary_hand.global_position))
+			print("  Primary grab point: " + primary_grab_point.name + " at " + str(primary_grab_point.global_position))
+			if secondary_grab_point:
+				print("  Secondary hand: " + secondary_hand.name + " at " + str(secondary_hand.global_position))
+				print("  Secondary grab point: " + secondary_grab_point.name + " at " + str(secondary_grab_point.global_position))
+		
+		# Calculate the target positions for both grab points
+		var primary_target = primary_hand.global_position
+		var secondary_target = secondary_hand.global_position
+		
+		# Calculate vectors from object center to grab points
+		var primary_to_center = grippable_object.global_position - primary_grab_point.global_position
+		var secondary_to_center = Vector3.ZERO
+		if secondary_grab_point:
+			secondary_to_center = grippable_object.global_position - secondary_grab_point.global_position
+		
+		# Calculate where the object center would be from each hand's perspective
+		var center_from_primary = primary_target + primary_to_center
+		var center_from_secondary = Vector3.ZERO
+		if secondary_grab_point:
+			center_from_secondary = secondary_target + secondary_to_center
+		
+		# Blend the two positions for the final center position
+		var new_center
+		if secondary_grab_point:
+			new_center = (center_from_primary + center_from_secondary) / 2.0
+		else:
+			new_center = center_from_primary
+		
+		# Calculate the direction vector from primary grab point to secondary grab point
+		var primary_to_secondary = Vector3.ZERO
+		if secondary_grab_point:
+			primary_to_secondary = secondary_grab_point.global_position - primary_grab_point.global_position
+			
+		# Calculate the desired direction vector between hands
+		var hand_direction = Vector3.ZERO
+		if secondary_grab_point:
+			hand_direction = secondary_hand.global_position - primary_hand.global_position
+		
+		# Create a new basis based on the direction between hands
+		var new_basis = target_transform.basis
+		if secondary_grab_point:
+			# Calculate rotation to align the primary-to-secondary vector with the hand direction
+			var primary_to_secondary_normalized = primary_to_secondary.normalized()
+			var hand_direction_normalized = hand_direction.normalized()
+			
+			# Calculate rotation from current direction to desired direction
+			var axis = primary_to_secondary_normalized.cross(hand_direction_normalized)
+			var angle = primary_to_secondary_normalized.angle_to(hand_direction_normalized)
+			
+			if angle > 0.001 and axis.length() > 0.001:
+				axis = axis.normalized()
+				new_basis = new_basis.rotated(axis, angle)
+		
+		# Apply the transform
+		target_transform.basis = new_basis
+		target_transform.origin = new_center
+		
+		# Apply the final transform to the object
+		grippable_object.global_transform = target_transform
+		return
+	
+	# Default SNAP mode handling - staff aligns between hands
+	# Use hand positions by default
+	var primary_pos = primary_transform.origin
+	var secondary_pos = secondary_transform.origin
+	
+	# Get the positions of the hands relative to grab points
+	var primary_offset = Vector3.ZERO
+	var secondary_offset = Vector3.ZERO
+	
+	# If using grab points, calculate positions and offsets
+	if is_instance_valid(primary_grab_point):
+		primary_offset = primary_grab_point.global_position - grippable_object.global_position
+	
+	if is_instance_valid(secondary_grab_point):
+		secondary_offset = secondary_grab_point.global_position - grippable_object.global_position
 	
 	# Calculate the direction vector from primary to secondary hand
 	var direction = (secondary_transform.origin - primary_transform.origin).normalized()
 	
-	# Calculate the distance between hands
-	var hand_distance = primary_transform.origin.distance_to(secondary_transform.origin)
-	
-	# Create a basis that points from primary to secondary hand
+	# Create a basis for the transform
 	var new_basis = Basis()
 	
-	# Staff/long object specific - align Y axis with the direction between hands
-	new_basis.y = direction
+	# Different handling for staff-like objects vs cube-like objects
+	var is_staff_like = primary_offset.distance_to(secondary_offset) > 0.5
 	
-	# Use primary hand's forward direction for Z axis
-	var primary_forward = - primary_transform.basis.z
+	if is_staff_like:
+		# Staff/long object specific - align Y axis with the direction between hands
+		new_basis.y = direction
+		
+		# Use primary hand's forward direction for Z axis
+		var primary_forward = -primary_transform.basis.z
+		
+		# Make sure Z is perpendicular to Y by using cross product for X and then cross again for Z
+		new_basis.x = new_basis.y.cross(primary_forward).normalized()
+		new_basis.z = new_basis.x.cross(new_basis.y).normalized()
+	else:
+		# For cube-like objects, preserve original orientation, just update position
+		new_basis = grippable_object.global_transform.basis
 	
-	# Make sure Z is perpendicular to Y by using cross product for X and then cross again for Z
-	new_basis.x = new_basis.y.cross(primary_forward).normalized()
-	new_basis.z = new_basis.x.cross(new_basis.y).normalized()
+	# Calculate the positions where the grab points should be
+	var desired_primary_pos = primary_transform.origin
+	var desired_secondary_pos = secondary_transform.origin
+	
+	# Calculate what position would place both grab points at the hands
+	var primary_global_offset = new_basis * primary_offset
+	var secondary_global_offset = new_basis * secondary_offset
+	
+	var pos_from_primary = desired_primary_pos - primary_global_offset
+	var pos_from_secondary = desired_secondary_pos - secondary_global_offset
+	
+	# Use the midpoint as our final position
+	var final_position = (pos_from_primary + pos_from_secondary) / 2.0
 	
 	# Construct the final transform
-	var target_transform = Transform3D(new_basis, midpoint)
+	var target_transform = Transform3D(new_basis, final_position)
 	
 	# Apply the transform
 	grippable_object.global_transform = target_transform
@@ -194,6 +339,12 @@ func grab(by_hand):
 	
 	# Find the best grab point for this hand
 	var best_grab_point = _find_best_grab_point(by_hand)
+	
+	print("===== GRAB EXECUTION =====")
+	print("Hand [%s] grabbing with point: %s" % [by_hand.name, best_grab_point.name if best_grab_point else "NONE"])
+	if best_grab_point:
+		print("Grab point position: " + str(best_grab_point.global_position))
+		print("Hand position: " + str(by_hand.global_position))
 	
 	# Handle already grabbed object based on second hand behavior
 	if is_grabbed:
@@ -219,10 +370,11 @@ func grab(by_hand):
 				# The release resets grab state, now we can continue with normal grab
 				
 			SecondHandMode.BOTH:
-				# For now, just add to secondary hands
+				 # Add to secondary hands and track the grab point for this hand
 				print("Adding second hand")
 				if by_hand not in secondary_hands:
 					secondary_hands.append(by_hand)
+					secondary_grab_points.append(best_grab_point)
 				
 				# If we have a grab point, notify it
 				if best_grab_point and best_grab_point.has_method("grabbed"):
@@ -246,6 +398,7 @@ func grab(by_hand):
 	
 	# Remember the global transform before reparenting
 	var world_transform = grippable_object.global_transform
+	print("Before reparenting - object world transform: " + str(world_transform))
 	
 	# Remove from current parent (could be original parent or previous hand's controller)
 	var current_parent = grippable_object.get_parent()
@@ -255,6 +408,7 @@ func grab(by_hand):
 	# If no specific grab point was found, use the first compatible one or null
 	if not is_instance_valid(active_grab_point):
 		active_grab_point = best_grab_point
+		print("Setting active grab point to: %s" % (active_grab_point.name if active_grab_point else "NONE"))
 	
 	# Notify the active grab point it was grabbed
 	if active_grab_point and active_grab_point.has_method("grabbed"):
@@ -275,6 +429,7 @@ func grab(by_hand):
 	
 	# Maintain world position
 	grippable_object.global_transform = world_transform
+	print("After reparenting - object world transform: " + str(grippable_object.global_transform))
 	
 	# Handle collision layers for the grabbed object
 	if grippable_object is CollisionObject3D:
@@ -319,7 +474,16 @@ func grab(by_hand):
 func release(by_hand, throw_velocity = Vector3.ZERO, throw_angular_velocity = Vector3.ZERO):
 	# Check if this is a secondary hand
 	if by_hand in secondary_hands:
+		var index = secondary_hands.find(by_hand)
 		secondary_hands.erase(by_hand)
+		
+		# Also remove the corresponding grab point
+		if index >= 0 and index < secondary_grab_points.size():
+			# If the grab point has a release method, call it
+			if secondary_grab_points[index] and secondary_grab_points[index].has_method("released"):
+				secondary_grab_points[index].released()
+			secondary_grab_points.remove_at(index)
+			
 		return true
 	
 	if not is_grabbed or grabbed_by != by_hand:
@@ -446,18 +610,75 @@ func can_grab(by_hand):
 func _find_best_grab_point(hand):
 	var grab_points = _get_grab_points()
 	if grab_points.size() == 0:
+		print("No grab points found on this object")
 		return null
+	
+	print("======== FINDING BEST GRAB POINT ========")
+	print("Total grab points found: %d" % grab_points.size())
+	for i in range(grab_points.size()):
+		var gp_type = "ANY"
+		if grab_points[i].hand_type == GrabPoint.HandType.LEFT:
+			gp_type = "LEFT"
+		elif grab_points[i].hand_type == GrabPoint.HandType.RIGHT:
+			gp_type = "RIGHT"
+		print("Grab point %d: %s (type: %s)" % [i, grab_points[i].name, gp_type])
 	
 	var best_grab_point = null
 	var best_distance = 10000.0
+	var hand_specific_grab_point = null
+	var hand_specific_best_distance = 10000.0
 	
+	# Get hand type from the hand collider
+	var hand_side = GrabPoint.HandType.ANY
+	if hand.has_meta("hand_type"):
+		hand_side = hand.get_meta("hand_type")
+	elif hand.name.to_lower().contains("left"):
+		hand_side = GrabPoint.HandType.LEFT
+	elif hand.name.to_lower().contains("right"):
+		hand_side = GrabPoint.HandType.RIGHT
+	
+	var hand_name = "ANY"
+	if hand_side == GrabPoint.HandType.LEFT:
+		hand_name = "LEFT"
+	elif hand_side == GrabPoint.HandType.RIGHT:
+		hand_name = "RIGHT"
+	print("Hand type detected: %s" % hand_name)
+	
+	# First pass - strictly find hand-specific grab points
+	print("First pass - looking for hand-specific grab points")
 	for grab_point in grab_points:
-		if grab_point.can_be_grabbed_by(hand):
+		# Only consider points that can be grabbed by this hand
+		if not grab_point.can_be_grabbed_by(hand):
+			continue
+			
+		var distance = hand.global_position.distance_to(grab_point.global_position)
+		print("  Grab point %s compatible, distance: %.2f" % [grab_point.name, distance])
+		
+		# Prioritize exact hand matches
+		if hand_side != GrabPoint.HandType.ANY and grab_point.hand_type == hand_side:
+			if distance < hand_specific_best_distance:
+				hand_specific_best_distance = distance
+				hand_specific_grab_point = grab_point
+				print("  -> New best hand-specific grab point: %s (distance: %.2f)" % [grab_point.name, distance])
+	
+	# If we found a hand-specific grab point, always use it
+	if hand_specific_grab_point != null:
+		print("Using hand-specific grab point: %s" % hand_specific_grab_point.name)
+		return hand_specific_grab_point
+	
+	# Second pass - find ANY-type grab points when no hand-specific points are available
+	print("Second pass - looking for ANY-type grab points")
+	for grab_point in grab_points:
+		if grab_point.can_be_grabbed_by(hand) and grab_point.hand_type == GrabPoint.HandType.ANY:
 			var distance = hand.global_position.distance_to(grab_point.global_position)
+			print("  ANY grab point %s, distance: %.2f" % [grab_point.name, distance])
 			if distance < best_distance:
 				best_distance = distance
 				best_grab_point = grab_point
+				print("  -> New best ANY grab point: %s (distance: %.2f)" % [grab_point.name, distance])
 	
+	print("Final selected grab point: %s" % (best_grab_point.name if best_grab_point else "None"))
+	print("======== END GRAB POINT SELECTION ========")
 	return best_grab_point
 
 # Get all grab points on this object
