@@ -297,7 +297,7 @@ func _handle_two_handed_manipulation(grippable_object):
 		new_basis.y = direction
 		
 		# Use primary hand's forward direction for Z axis
-		var primary_forward = -primary_transform.basis.z
+		var primary_forward = - primary_transform.basis.z
 		
 		# Make sure Z is perpendicular to Y by using cross product for X and then cross again for Z
 		new_basis.x = new_basis.y.cross(primary_forward).normalized()
@@ -459,7 +459,6 @@ func grab(by_hand):
 	# Make physics objects behave properly when grabbed
 	if grippable_object is RigidBody3D:
 		var rigid_body = grippable_object as RigidBody3D
-		rigid_body.freeze = true
 		rigid_body.gravity_scale = 0.0
 	
 	# Turn off highlight when grabbed
