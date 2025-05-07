@@ -13,8 +13,6 @@ signal unhovered(by_hand)
 
 # Properties
 @export var enabled: bool = true
-@export var grab_offset: Vector3 = Vector3.ZERO # Offset position when grabbed
-@export var grab_rotation: Vector3 = Vector3.ZERO # Offset rotation when grabbed
 
 # Hand swapping options
 enum SecondHandMode {
@@ -33,7 +31,6 @@ enum SecondHandMode {
 # Collision settings
 @export var disable_collisions_when_grabbed: bool = false # Whether to disable collisions when grabbed
 @export var retain_collision_with_hands: bool = true # Keep colliding with hands even when grabbed
-@export var use_continuous_collision: bool = false # Enable continuous collision detection for grabbed objects
 
 # State tracking
 var is_grabbed: bool = false
@@ -248,7 +245,7 @@ func grab(by_hand):
 				grippable_object.collision_layer = 12 # Layers 3+4 (binary: 00001100)
 				# Allow object to see both hands and the player body
 				grippable_object.collision_mask = 14 # Layers 2+3+4 (binary: 00001110)
-			else:
+				
 				# Completely disable all collisions
 				grippable_object.collision_layer = 0
 				grippable_object.collision_mask = 0
@@ -257,6 +254,7 @@ func grab(by_hand):
 			if by_hand is Area3D and retain_collision_with_hands:
 				# Always add both hands' layers
 				grippable_object.collision_mask |= 12 # Layers 3+4 (binary: 00001100)
+				
 	
 	# Make physics objects behave properly when grabbed
 	if grippable_object is RigidBody3D:
