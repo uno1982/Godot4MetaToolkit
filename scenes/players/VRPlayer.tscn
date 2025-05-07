@@ -57,10 +57,12 @@ mesh = SubResource("CylinderMesh_ti1y2")
 surface_material_override/0 = SubResource("StandardMaterial3D_avl12")
 
 [node name="VRHandCollider" type="Area3D" parent="LeftController"]
-collision_mask = 9
+collision_layer = 8
+collision_mask = 15
 script = ExtResource("2_ke4ib")
 debug_sphere_color = Color(0.148614, 0.726923, 0.952147, 0.4)
 hand_controller_path = NodePath("..")
+hand_type = "LEFT"
 grip_action = "grip_click"
 grip_threshold = 0.5
 metadata/_custom_type_script = "uid://0obl2pnek78a"
@@ -88,7 +90,8 @@ mesh = SubResource("CylinderMesh_cr7io")
 surface_material_override/0 = SubResource("StandardMaterial3D_nfdh3")
 
 [node name="VRHandCollider" type="Area3D" parent="RightController"]
-collision_mask = 9
+collision_layer = 4
+collision_mask = 15
 script = ExtResource("2_ke4ib")
 debug_sphere_color = Color(0.734906, 0.0676843, 0.198859, 0.4)
 hand_controller_path = NodePath("..")

@@ -1,14 +1,18 @@
-[gd_scene load_steps=16 format=3 uid="uid://bixghxgm8e17d"]
+[gd_scene load_steps=20 format=3 uid="uid://bixghxgm8e17d"]
 
 [ext_resource type="Script" uid="uid://h5ktq382xcfd" path="res://scripts/main_vr_init.gd" id="1_8m2mm"]
 [ext_resource type="Script" uid="uid://burniin4urqcb" path="res://scripts/Grippable.gd" id="2_a2doh"]
 [ext_resource type="PackedScene" uid="uid://dqd40ieyk2ifn" path="res://scenes/sky/SkySphere.tscn" id="3_58ejf"]
+[ext_resource type="Script" uid="uid://b0q6hj5r1odbd" path="res://scripts/GrabPoint.gd" id="4_3h15o"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_gfq7l"]
 size = Vector3(0.1, 0.1, 0.1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_26exb"]
 albedo_color = Color(0.921569, 0.176471, 0.219608, 1)
+emission_enabled = true
+emission = Color(0.921569, 0.176471, 0.219608, 1)
+emission_energy_multiplier = 0.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ssdpq"]
 size = Vector3(0.1, 0.1, 0.1)
@@ -18,6 +22,9 @@ size = Vector3(0.15, 0.15, 0.15)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_toeep"]
 albedo_color = Color(0.223529, 0.741176, 0.270588, 1)
+emission_enabled = true
+emission = Color(0.223529, 0.741176, 0.270588, 1)
+emission_energy_multiplier = 0.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s85tj"]
 size = Vector3(0.15, 0.15, 0.15)
@@ -29,6 +36,9 @@ height = 0.2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yc4as"]
 albedo_color = Color(0.258824, 0.356863, 0.901961, 1)
+emission_enabled = true
+emission = Color(0.258824, 0.356863, 0.901961, 1)
+emission_energy_multiplier = 0.0
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_6p142"]
 height = 0.2
@@ -40,9 +50,27 @@ height = 0.14
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g0m6i"]
 albedo_color = Color(0.843137, 0.607843, 0.12549, 1)
+emission_enabled = true
+emission = Color(0.843137, 0.607843, 0.12549, 1)
+emission_energy_multiplier = 0.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_2d6c8"]
 radius = 0.07
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_staffbase"]
+top_radius = 0.03
+bottom_radius = 0.03
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_staffmat"]
+albedo_color = Color(0.2, 0.2, 0.2, 1)
+emission_enabled = true
+emission = Color(0.4, 0.4, 0.4, 1)
+emission_energy_multiplier = 0.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_staffcol"]
+height = 1.0
+radius = 0.03
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_8m2mm")
@@ -73,6 +101,8 @@ shape = SubResource("BoxShape3D_ssdpq")
 
 [node name="Grippable" type="Node3D" parent="GrippableObjects/RedCube"]
 script = ExtResource("2_a2doh")
+highlight_mesh_instance = NodePath("../MeshInstance3D")
+throw_impulse_factor = 2.0
 
 [node name="GreenCube" type="RigidBody3D" parent="GrippableObjects"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.8, -0.5)
@@ -91,7 +121,20 @@ shape = SubResource("BoxShape3D_s85tj")
 
 [node name="Grippable" type="Node3D" parent="GrippableObjects/GreenCube"]
 script = ExtResource("2_a2doh")
-grab_offset = Vector3(0, 0, -0.05)
+second_hand_behavior = 2
+highlight_mesh_instance = NodePath("../MeshInstance3D")
+
+[node name="GrabPointLeft" type="Node3D" parent="GrippableObjects/GreenCube"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0, 0)
+script = ExtResource("4_3h15o")
+hand_type = 1
+drive_position = 0.5
+
+[node name="GrabPointRight" type="Node3D" parent="GrippableObjects/GreenCube"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, 0, 0)
+script = ExtResource("4_3h15o")
+hand_type = 2
+drive_position = 1.0
 
 [node name="BlueCylinder" type="RigidBody3D" parent="GrippableObjects"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.8, -0.8)
@@ -111,8 +154,19 @@ shape = SubResource("CylinderShape3D_6p142")
 
 [node name="Grippable" type="Node3D" parent="GrippableObjects/BlueCylinder"]
 script = ExtResource("2_a2doh")
-grab_offset = Vector3(0, 0, -0.01)
-grab_rotation = Vector3(1.5708, 0, 0)
+highlight_mesh_instance = NodePath("../MeshInstance3D")
+
+[node name="GrabPointTop" type="Node3D" parent="GrippableObjects/BlueCylinder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+script = ExtResource("4_3h15o")
+drive_position = 0.8
+
+[node name="GrabPointBottom" type="Node3D" parent="GrippableObjects/BlueCylinder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+script = ExtResource("4_3h15o")
+grab_mode = 1
+drive_position = 0.3
+drive_rotation = 0.6
 
 [node name="YellowSphere" type="RigidBody3D" parent="GrippableObjects"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.8, -0.8)
@@ -132,6 +186,54 @@ shape = SubResource("SphereShape3D_2d6c8")
 
 [node name="Grippable" type="Node3D" parent="GrippableObjects/YellowSphere"]
 script = ExtResource("2_a2doh")
+highlight_mesh_instance = NodePath("../MeshInstance3D")
+
+[node name="Staff" type="RigidBody3D" parent="GrippableObjects"]
+transform = Transform3D(-0.0507498, -0.998711, 0, 0.998711, -0.0507498, 0, 0, 0, 1, 0.3, 0.8, -0.722451)
+collision_layer = 8
+collision_mask = 9
+mass = 2.0
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 5
+
+[node name="StaffMesh" type="MeshInstance3D" parent="GrippableObjects/Staff"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+mesh = SubResource("CylinderMesh_staffbase")
+surface_material_override/0 = SubResource("StandardMaterial3D_staffmat")
+
+[node name="StaffCollision" type="CollisionShape3D" parent="GrippableObjects/Staff"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+shape = SubResource("CylinderShape3D_staffcol")
+
+[node name="Grippable" type="Node3D" parent="GrippableObjects/Staff"]
+script = ExtResource("2_a2doh")
+second_hand_behavior = 2
+highlight_mesh_instance = NodePath("../StaffMesh")
+
+[node name="GrabPointTopLeft" type="Node3D" parent="GrippableObjects/Staff"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+script = ExtResource("4_3h15o")
+hand_type = 1
+drive_position = 0.7
+
+[node name="GrabPointTopRight" type="Node3D" parent="GrippableObjects/Staff"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+script = ExtResource("4_3h15o")
+hand_type = 2
+drive_position = 0.7
+
+[node name="GrabPointBottomLeft" type="Node3D" parent="GrippableObjects/Staff"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+script = ExtResource("4_3h15o")
+hand_type = 1
+drive_position = 0.7
+
+[node name="GrabPointBottomRight" type="Node3D" parent="GrippableObjects/Staff"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+script = ExtResource("4_3h15o")
+hand_type = 2
+drive_position = 0.7
 
 [node name="Environment" type="Node3D" parent="."]
 
