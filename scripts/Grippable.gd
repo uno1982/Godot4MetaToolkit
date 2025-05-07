@@ -16,6 +16,14 @@ signal unhovered(by_hand)
 @export var grab_offset: Vector3 = Vector3.ZERO # Offset position when grabbed
 @export var grab_rotation: Vector3 = Vector3.ZERO # Offset rotation when grabbed
 
+# Hand swapping options
+enum SecondHandMode {
+	IGNORE, # Ignore attempts by second hand to grab
+	SWAP, # Release from first hand and grab with second
+	BOTH # Allow both hands to grab (not fully implemented yet)
+}
+@export var second_hand_behavior: SecondHandMode = SecondHandMode.SWAP
+
 # State tracking
 var is_grabbed: bool = false
 var grabbed_by = null # The hand currently grabbing this object
@@ -31,35 +39,41 @@ func _ready():
 	if Engine.is_editor_hint():
 		return
 
-# Override _physics_process to update the object's position to follow the hand
-func _physics_process(delta):
-	if is_grabbed and is_instance_valid(grabbed_by):
-		 # Update position based on hand movement with offset
-		var target_position = grabbed_by.global_position + grabbed_by.global_transform.basis * grab_offset
-		
-		# Update rotation based on hand rotation with offset
-		var target_rotation = Vector3(
-			grabbed_by.global_rotation.x + deg_to_rad(grab_rotation.x),
-			grabbed_by.global_rotation.y + deg_to_rad(grab_rotation.y),
-			grabbed_by.global_rotation.z + deg_to_rad(grab_rotation.z)
-		)
-		
-		# Smoothly move to target position and rotation
-		global_position = global_position.lerp(target_position, delta * follow_speed)
-		global_rotation.x = lerp_angle(global_rotation.x, target_rotation.x, delta * follow_speed)
-		global_rotation.y = lerp_angle(global_rotation.y, target_rotation.y, delta * follow_speed)
-		global_rotation.z = lerp_angle(global_rotation.z, target_rotation.z, delta * follow_speed)
-
 # Called when this object is grabbed by a VRHandCollider
 func grab(by_hand):
-	if not enabled or is_grabbed:
+	if not enabled:
 		return false
-		
+	
 	# Get the grippable object (our parent)
 	var grippable_object = get_parent()
 	if not grippable_object:
 		push_error("Grippable has no parent object to grab")
 		return false
+	
+	# Handle already grabbed object based on second hand behavior
+	if is_grabbed:
+		match second_hand_behavior:
+			SecondHandMode.IGNORE:
+				# Ignore second hand grab attempts
+				print("Object already grabbed, ignoring second hand")
+				return false
+				
+			SecondHandMode.SWAP:
+				# Release from first hand and allow second hand to grab
+				print("Swapping to second hand")
+				var previous_hand = grabbed_by
+				# Force release from current hand (with zero velocity to avoid throwing)
+				if is_instance_valid(grabbed_by):
+					release(grabbed_by, Vector3.ZERO, Vector3.ZERO)
+				# The release resets grab state, so we can continue with normal grab
+				
+			SecondHandMode.BOTH:
+				# For now, just swap since we haven't implemented two-handed grabbing
+				print("Two-handed grabbing not fully implemented, swapping hands")
+				var previous_hand = grabbed_by
+				if is_instance_valid(grabbed_by):
+					release(grabbed_by, Vector3.ZERO, Vector3.ZERO)
+				# Could be extended in the future to support true two-handed grabbing
 	
 	# Store original state
 	is_grabbed = true
@@ -151,9 +165,25 @@ func hover_end(by_hand):
 
 # Check if this object can be grabbed
 func can_grab(by_hand):
-	# The by_hand parameter is used for interface consistency and potential future use
-	# for hand-specific grab conditions
-	return enabled and not is_grabbed
+	# If not enabled at all, can't be grabbed
+	if not enabled:
+		return false
+		
+	# If not currently grabbed, can be grabbed
+	if not is_grabbed:
+		return true
+		
+	# If already grabbed, check second-hand behavior
+	match second_hand_behavior:
+		SecondHandMode.IGNORE:
+			# Can't grab if we're ignoring second hand
+			return false
+			
+		SecondHandMode.SWAP, SecondHandMode.BOTH:
+			# Can grab if we allow swapping or both hands
+			return true
+			
+	return false
 
 # Check if this object is currently grabbed
 func is_currently_grabbed():
