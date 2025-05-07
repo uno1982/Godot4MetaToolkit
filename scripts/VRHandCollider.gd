@@ -32,7 +32,7 @@ var hand_controller = null # Reference to the controller node
 var grip_value = 0.0 # Current grip value
 
 # Physics tracking for throws
-var velocity_averager = [] # Stores position history for velocity calculation
+var velocity_averager = null # Will use XRToolsVelocityAverager
 var max_velocity_samples = 10 # Number of samples for velocity averaging
 var last_transform = Transform3D() # Last transform of hand for velocity calculation
 
@@ -70,6 +70,8 @@ func _ready():
 	if not collision_shape:
 		collision_shape = get_node_or_null("CollisionShape3D")
 	
+	# Initialize the velocity averager
+	velocity_averager = XRToolsVelocityAverager.new(max_velocity_samples)
 	
 	if debug_mode:
 		print("VRHandCollider initialized - layer: " + str(collision_layer) + ", mask: " + str(collision_mask))
@@ -84,10 +86,8 @@ func _ready():
 	area_entered.connect(_on_area_entered)
 	area_exited.connect(_on_area_exited)
 	
-	# Initialize transform tracking for velocity calculation
+	# Initialize transform tracking
 	last_transform = global_transform
-	for i in range(max_velocity_samples):
-		velocity_averager.append(Vector3.ZERO)
 
 func _enter_tree():
 	# Set up the collision shape and debug visualization
@@ -342,41 +342,23 @@ func _on_area_exited(area):
 		emit_signal("object_unhovered", grippable)
 		print("No longer hovering grippable area: ", grippable.name)
 
-
 # Update velocity tracking for throwing
 func update_velocity_tracking(delta):
-	# Store current position and rotation for velocity calculations
-	var current_transform = global_transform
-	
-	# Shift values in the array
-	for i in range(max_velocity_samples - 1, 0, -1):
-		velocity_averager[i] = velocity_averager[i - 1]
-	
-	# Calculate current velocity and store at index 0
-	if delta > 0:
-		velocity_averager[0] = (current_transform.origin - last_transform.origin) / delta
-	
-	# Update last transform
-	last_transform = current_transform
+	# Use the velocity averager to track hand movement
+	if velocity_averager:
+		velocity_averager.add_transform(delta, global_transform)
 
 # Get average velocity for throwing objects
 func get_average_velocity():
-	var avg = Vector3.ZERO
-	var count = 0
-	
-	for vel in velocity_averager:
-		avg += vel
-		count += 1
-	
-	if count > 0:
-		avg /= count
-	
-	return avg * throw_impulse_factor
+	if velocity_averager:
+		return velocity_averager.linear_velocity() * throw_impulse_factor
+	return Vector3.ZERO
 
 # Get average angular velocity for throwing objects
 func get_average_angular_velocity():
-	# A simple approximation - could be improved for more realistic throwing
-	return Vector3(randf_range(-1, 1), randf_range(-1, 1), randf_range(-1, 1)) * 0.5
+	if velocity_averager:
+		return velocity_averager.angular_velocity()
+	return Vector3.ZERO
 
 # Call this when the grab button is pressed
 func try_grab():

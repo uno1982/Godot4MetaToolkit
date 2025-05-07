@@ -23,36 +23,17 @@ var hovering_hands = [] # All hands currently hovering over this object
 var original_parent = null # Original parent before grabbed
 var original_transform = Transform3D() # Original transform before grabbed
 
-# Physics tracking
-var previous_pos = Vector3.ZERO
-var current_pos = Vector3.ZERO
-var current_velocity = Vector3.ZERO
-var velocity_frames = [] # Store previous velocities for averaging
-const MAX_VELOCITY_FRAMES = 5 # Number of frames to average velocity
-
 # Constants for follow speed
 var follow_speed: float = 20.0 # Speed at which object follows hand
 
 func _ready():
-	if not Engine.is_editor_hint():
-		previous_pos = global_position
-		current_pos = global_position
+	# Initialize in editor mode check
+	if Engine.is_editor_hint():
+		return
 
 # Override _physics_process to update the object's position to follow the hand
 func _physics_process(delta):
 	if is_grabbed and is_instance_valid(grabbed_by):
-		# Track previous position for velocity calculation
-		previous_pos = current_pos
-		current_pos = global_position
-		
-		# Calculate instantaneous velocity
-		var frame_velocity = (current_pos - previous_pos) / delta
-		
-		# Add to our velocity tracking
-		if velocity_frames.size() >= MAX_VELOCITY_FRAMES:
-			velocity_frames.pop_front()
-		velocity_frames.push_back(frame_velocity)
-		
 		 # Update position based on hand movement with offset
 		var target_position = grabbed_by.global_position + grabbed_by.global_transform.basis * grab_offset
 		
@@ -109,11 +90,6 @@ func grab(by_hand):
 		rigid_body.freeze = true
 		rigid_body.gravity_scale = 0.0
 	
-	# Initialize position tracking for velocity calculation
-	previous_pos = global_position
-	current_pos = global_position
-	velocity_frames.clear()
-	
 	# Emit the signal
 	emit_signal("grabbed", by_hand)
 	return true
@@ -149,22 +125,13 @@ func release(by_hand, throw_velocity = Vector3.ZERO, throw_angular_velocity = Ve
 		rigid_body.freeze = false
 		rigid_body.gravity_scale = 1.0
 		
-		# Calculate average velocity for smoother throwing
-		var avg_velocity = Vector3.ZERO
-		for v in velocity_frames:
-			avg_velocity += v
-		
-		if velocity_frames.size() > 0:
-			avg_velocity /= velocity_frames.size()
-		
-		# Apply combined velocity (averaged + throw)
-		rigid_body.linear_velocity = avg_velocity + throw_velocity
+		 # Apply combined velocity (hand's calculated velocity + throw)
+		rigid_body.linear_velocity = throw_velocity
 		rigid_body.angular_velocity = throw_angular_velocity
 	
 	# Reset state
 	is_grabbed = false
 	grabbed_by = null
-	velocity_frames.clear()
 	
 	# Emit the signal
 	emit_signal("released", by_hand)
