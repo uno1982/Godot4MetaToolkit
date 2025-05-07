@@ -88,8 +88,6 @@ disable_mode = 2
 collision_layer = 8
 collision_mask = 9
 mass = 0.5
-continuous_cd = true
-contact_monitor = true
 max_contacts_reported = 5
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="GrippableObjects/RedCube"]
@@ -108,8 +106,6 @@ throw_impulse_factor = 2.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.8, -0.5)
 collision_layer = 8
 collision_mask = 9
-continuous_cd = true
-contact_monitor = true
 max_contacts_reported = 5
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="GrippableObjects/GreenCube"]
@@ -121,7 +117,6 @@ shape = SubResource("BoxShape3D_s85tj")
 
 [node name="Grippable" type="Node3D" parent="GrippableObjects/GreenCube"]
 script = ExtResource("2_a2doh")
-second_hand_behavior = 2
 highlight_mesh_instance = NodePath("../MeshInstance3D")
 
 [node name="GrabPointLeft" type="Node3D" parent="GrippableObjects/GreenCube"]

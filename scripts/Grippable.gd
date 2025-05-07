@@ -15,7 +15,6 @@ signal unhovered(by_hand)
 @export var enabled: bool = true
 @export var grab_offset: Vector3 = Vector3.ZERO # Offset position when grabbed
 @export var grab_rotation: Vector3 = Vector3.ZERO # Offset rotation when grabbed
-@export var debug_mode: bool = true # Enable detailed debug output
 
 # Hand swapping options
 enum SecondHandMode {
@@ -28,10 +27,13 @@ enum SecondHandMode {
 # Highlight settings
 @export var highlight_on_hover: bool = true
 @export var highlight_mesh_instance: NodePath
+@export var highlight_color: Color = Color(1.0, 0.9, 0.1, 0.3)
+@export var normal_color: Color = Color(1.0, 1.0, 1.0, 1.0)
 
 # Collision settings
 @export var disable_collisions_when_grabbed: bool = false # Whether to disable collisions when grabbed
 @export var retain_collision_with_hands: bool = true # Keep colliding with hands even when grabbed
+@export var use_continuous_collision: bool = false # Enable continuous collision detection for grabbed objects
 
 # State tracking
 var is_grabbed: bool = false
@@ -234,24 +236,18 @@ func grab(by_hand):
 	
 	# Handle collision layers for the grabbed object
 	if grippable_object is CollisionObject3D:
+		# Store original collision settings
+		original_collision_layer = grippable_object.collision_layer
+		original_collision_mask = grippable_object.collision_mask
+	
 		if disable_collisions_when_grabbed:
-			 # Store original collision settings
-			original_collision_layer = grippable_object.collision_layer
-			original_collision_mask = grippable_object.collision_mask
-			
-			# Get both hands' collision layers (important for hand-to-hand interaction)
-			var hands_layer = 0
-			if by_hand is Area3D:
-				hands_layer = 12 # Combined layer for both hands (layers 3 and 4)
-				
 			if retain_collision_with_hands:
-				# Set collision layer to interact with both hands (layers 3+4) and player body (layer 2)
-				grippable_object.collision_layer = hands_layer | 2
-				grippable_object.collision_mask = hands_layer | 2
-				
-				if debug_mode:
-					print("Grabbed object collision settings - Layer: ", grippable_object.collision_layer,
-						  " Mask: ", grippable_object.collision_mask)
+				# Always make the object visible to BOTH hands (layers 3+4) plus player body (layer 2)
+				# This fixes the issue where held objects weren't visible to the other hand
+				# Set layer to BOTH left and right hand layers (8+4=12) to be visible to all hand colliders
+				grippable_object.collision_layer = 12 # Layers 3+4 (binary: 00001100)
+				# Allow object to see both hands and the player body
+				grippable_object.collision_mask = 14 # Layers 2+3+4 (binary: 00001110)
 			else:
 				# Completely disable all collisions
 				grippable_object.collision_layer = 0
@@ -259,10 +255,8 @@ func grab(by_hand):
 		else:
 			# Not disabling collisions, but ensure hand collision is set up properly
 			if by_hand is Area3D and retain_collision_with_hands:
-				# Add both hands' layers to our mask so we can detect both hands
-				grippable_object.collision_mask |= 12 # Layers 3+4
-				# Also add both hands' layers to our layer so hands can detect us
-				grippable_object.collision_layer |= 12 # Layers 3+4
+				# Always add both hands' layers
+				grippable_object.collision_mask |= 12 # Layers 3+4 (binary: 00001100)
 	
 	# Make physics objects behave properly when grabbed
 	if grippable_object is RigidBody3D:

@@ -16,9 +16,6 @@ class_name VRHandCollider
 @export var grip_threshold: float = 0.6 # Threshold for grab detection
 @export var throw_impulse_factor: float = 1.5 # Factor for throwing velocity
 
-# Debug settings
-@export var debug_mode: bool = true # Enable detailed debug output
-
 # Signals
 signal object_hovered(object)
 signal object_unhovered(object)
@@ -79,16 +76,6 @@ func _ready():
 	
 	# Initialize the velocity averager
 	velocity_averager = XRToolsVelocityAverager.new(max_velocity_samples)
-	
-	if debug_mode:
-		print("====== INITIALIZING " + hand_type + " HAND COLLIDER ======")
-		print("VRHandCollider initialized - layer: " + str(collision_layer) + ", mask: " + str(collision_mask))
-		print("Active collision layers: " + str(_get_active_layers(collision_layer)))
-		print("Active collision mask: " + str(_get_active_layers(collision_mask)))
-		print("Current collision shape: " + str(collision_shape))
-		print("Hand type: " + hand_type)
-		print("Parent controller: " + str(get_parent().name))
-		print("=================================================")
 	
 	# Connect signals
 	body_entered.connect(_on_body_entered)
@@ -218,15 +205,6 @@ func _on_body_entered(body):
 	if Engine.is_editor_hint():
 		return
 	
-	if debug_mode:
-		print("\n==== HAND COLLIDER DETECTED BODY ====")
-		print("Hand: " + name + " detected body: " + body.name)
-		print("Body collision layer: " + str(body.collision_layer))
-		print("Hand collision mask: " + str(collision_mask))
-		print("Parent hierarchy of body:")
-		_print_hierarchy(body)
-		print("======================================\n")
-	
 	# Check for several cases:
 	# 1. Body has Grippable component directly
 	# 2. Body has Grippable as child
@@ -258,16 +236,12 @@ func _on_body_entered(body):
 		if not hovering_objects.has(body):
 			hovering_objects.append(body)
 			emit_signal("object_hovered", body)
-			if debug_mode:
-				print("Hovering over: ", body.name)
 	
 	# Handle grippable object
 	if grippable and not hovering_objects.has(grippable):
 		hovering_objects.append(grippable)
 		grippable.hover_begin(self)
 		emit_signal("object_hovered", grippable)
-		if debug_mode:
-			print("Hovering over grippable: ", grippable.name)
 
 # Handle exiting a physics body's collision
 func _on_body_exited(body):
@@ -297,8 +271,6 @@ func _on_body_exited(body):
 	if hovering_objects.has(body):
 		hovering_objects.erase(body)
 		emit_signal("object_unhovered", body)
-		if debug_mode:
-			print("No longer hovering: ", body.name)
 		
 		if grabbed_object == body:
 			release_object()
@@ -308,8 +280,6 @@ func _on_body_exited(body):
 		hovering_objects.erase(grippable)
 		grippable.hover_end(self)
 		emit_signal("object_unhovered", grippable)
-		if debug_mode:
-			print("No longer hovering grippable: ", grippable.name)
 
 # Handle entering another area's collision
 func _on_area_entered(area):
@@ -339,15 +309,11 @@ func _on_area_entered(area):
 		if not hovering_objects.has(area):
 			hovering_objects.append(area)
 			emit_signal("object_hovered", area)
-			if debug_mode:
-				print("Hovering over area: ", area.name)
 	
 	if grippable and not hovering_objects.has(grippable):
 		hovering_objects.append(grippable)
 		grippable.hover_begin(self)
 		emit_signal("object_hovered", grippable)
-		if debug_mode:
-			print("Hovering over grippable area: ", grippable.name)
 
 # Handle exiting another area's collision
 func _on_area_exited(area):
@@ -376,8 +342,6 @@ func _on_area_exited(area):
 	if hovering_objects.has(area):
 		hovering_objects.erase(area)
 		emit_signal("object_unhovered", area)
-		if debug_mode:
-			print("No longer hovering area: ", area.name)
 		
 		if grabbed_object == area:
 			release_object()
@@ -386,8 +350,6 @@ func _on_area_exited(area):
 		hovering_objects.erase(grippable)
 		grippable.hover_end(self)
 		emit_signal("object_unhovered", grippable)
-		if debug_mode:
-			print("No longer hovering grippable area: ", grippable.name)
 
 # Update velocity tracking for throwing
 func update_velocity_tracking(delta):
@@ -422,15 +384,12 @@ func try_grab():
 			if closest_object is Grippable:
 				 # If the object is already grabbed by another hand, we'll let the Grippable handle it
 				if closest_object.is_grabbed and closest_object.grabbed_by != self:
-					if debug_mode:
-						print("Attempting to grab object held by another hand")
+					pass
 					
 				# Use the Grippable's grab method
 				if closest_object.grab(self):
 					grabbed_object = closest_object
 					emit_signal("object_grabbed", grabbed_object)
-					if debug_mode:
-						print("Grabbed grippable: ", grabbed_object.name)
 					return true
 			
 			 # Don't allow grabbing non-Grippable objects that we already have
@@ -453,8 +412,6 @@ func try_grab():
 					grabbed_object.transform = Transform3D() # Reset local transform
 				
 				emit_signal("object_grabbed", grabbed_object)
-				if debug_mode:
-					print("Grabbed: ", grabbed_object.name)
 				return true
 	return false
 
@@ -512,8 +469,6 @@ func release_object():
 				grabbed_object.angular_velocity = throw_angular_velocity
 		
 		emit_signal("object_released", grabbed_object)
-		if debug_mode:
-			print("Released: ", grabbed_object.name)
 		
 		grabbed_object = null
 		return true
@@ -536,20 +491,6 @@ func get_hovering_objects():
 # Get the currently grabbed object
 func get_grabbed_object():
 	return grabbed_object
-
-# Helper function to print node hierarchy
-func _print_hierarchy(node, indent = ""):
-	if node == null:
-		return
-	
-	print(indent + "- " + node.name + " [" + node.get_class() + "]")
-	
-	# Print collision info if available
-	if node is CollisionObject3D:
-		print(indent + "  Layer: " + str(node.collision_layer) + ", Mask: " + str(node.collision_mask))
-	
-	if node.get_parent():
-		_print_hierarchy(node.get_parent(), indent + "  ")
 
 # Helper function to convert bit mask to array of active layers
 func _get_active_layers(bitmask: int) -> Array:
