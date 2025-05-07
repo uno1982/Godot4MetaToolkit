@@ -81,6 +81,11 @@ func _physics_process(delta):
 		# Update velocity tracking
 		_velocity_averager.add_transform(delta, grippable_object.global_transform)
 		
+		 # Check if we have a second hand grabbing - if so, handle two-handed manipulation
+		if second_hand_behavior == SecondHandMode.BOTH and secondary_hands.size() > 0:
+			_handle_two_handed_manipulation(grippable_object)
+			return
+		
 		# Apply different following behavior based on grab point
 		if is_instance_valid(active_grab_point):
 			 # Base the transform on the grabbing hand
@@ -135,6 +140,46 @@ func _physics_process(delta):
 		else:
 			# No grab point, use default behavior - directly follow the hand
 			grippable_object.global_transform = grabbed_by.global_transform
+
+# Handle the case where two hands are manipulating an object
+func _handle_two_handed_manipulation(grippable_object):
+	if secondary_hands.size() == 0 or not is_instance_valid(secondary_hands[0]):
+		return
+		
+	var primary_hand = grabbed_by
+	var secondary_hand = secondary_hands[0]
+	
+	# Get the transforms of both hands
+	var primary_transform = primary_hand.global_transform
+	var secondary_transform = secondary_hand.global_transform
+	
+	# Calculate the midpoint between the two hands
+	var midpoint = (primary_transform.origin + secondary_transform.origin) / 2.0
+	
+	# Calculate the direction vector from primary to secondary hand
+	var direction = (secondary_transform.origin - primary_transform.origin).normalized()
+	
+	# Calculate the distance between hands
+	var hand_distance = primary_transform.origin.distance_to(secondary_transform.origin)
+	
+	# Create a basis that points from primary to secondary hand
+	var new_basis = Basis()
+	
+	# Staff/long object specific - align Y axis with the direction between hands
+	new_basis.y = direction
+	
+	# Use primary hand's forward direction for Z axis
+	var primary_forward = - primary_transform.basis.z
+	
+	# Make sure Z is perpendicular to Y by using cross product for X and then cross again for Z
+	new_basis.x = new_basis.y.cross(primary_forward).normalized()
+	new_basis.z = new_basis.x.cross(new_basis.y).normalized()
+	
+	# Construct the final transform
+	var target_transform = Transform3D(new_basis, midpoint)
+	
+	# Apply the transform
+	grippable_object.global_transform = target_transform
 
 # Called when this object is grabbed by a VRHandCollider
 func grab(by_hand):

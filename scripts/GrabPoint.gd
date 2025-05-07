@@ -18,7 +18,7 @@ enum GrabMode {
 }
 
 # Properties
-@export var hand_type: HandType = HandType.ANY
+@export var hand_type: HandType = HandType.ANY: set = _set_hand_type
 @export var grab_mode: GrabMode = GrabMode.SNAP
 @export var hand_pose: Resource = null # Optional custom hand pose resource
 
@@ -32,6 +32,12 @@ enum GrabMode {
 @export var ring_size: float = 0.2: set = _set_ring_size
 @export var ring_color: Color = Color(1.0, 0.8, 0.2, 0.8): set = _set_ring_color
 @export var pulse_effect: bool = false: set = _set_pulse_effect
+@export var use_hand_colors: bool = true: set = _set_use_hand_colors
+
+# Pre-defined colors for hands
+const LEFT_HAND_COLOR = Color(0.2, 0.4, 1.0, 0.8) # Blue
+const RIGHT_HAND_COLOR = Color(1.0, 0.2, 0.2, 0.8) # Red
+const ANY_HAND_COLOR = Color(1.0, 0.8, 0.2, 0.8) # Yellow (default)
 
 # Billboard node
 var _ring_billboard: Sprite3D
@@ -59,6 +65,10 @@ func _get_configuration_warnings() -> PackedStringArray:
 	return warnings
 
 func _ready():
+	# If we're using hand colors, apply them
+	if use_hand_colors:
+		_set_hand_type(hand_type)
+		
 	# Create the ring billboard
 	_create_ring_billboard()
 
@@ -128,6 +138,26 @@ func _set_pulse_effect(value):
 	# Reset the pulse time when turning on
 	if value:
 		_pulse_time = 0.0
+
+# Property setter for hand_type
+func _set_hand_type(value):
+	hand_type = value
+	if use_hand_colors:
+		match hand_type:
+			HandType.LEFT:
+				ring_color = LEFT_HAND_COLOR
+			HandType.RIGHT:
+				ring_color = RIGHT_HAND_COLOR
+			_:
+				ring_color = ANY_HAND_COLOR
+		if is_inside_tree() and _ring_billboard and is_instance_valid(_ring_billboard):
+			_ring_billboard.modulate = ring_color
+
+# Property setter for use_hand_colors
+func _set_use_hand_colors(value):
+	use_hand_colors = value
+	if use_hand_colors:
+		_set_hand_type(hand_type)
 
 # Check if this grab point is compatible with the given hand
 func can_be_grabbed_by(hand_collider):
